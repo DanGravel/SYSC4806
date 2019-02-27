@@ -20,8 +20,8 @@ public class RegisterController {
 
     private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
-    PasswordEncoder encoder =
-            PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
     @Autowired
     public RegisterController(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
         this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
@@ -34,21 +34,18 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String newBuddy(@ModelAttribute User user, Model model){
+    public String newUser(@ModelAttribute User user){
+        user.setPassword(encoder.encode(user.getPassword()));
         repository.save(user);
-        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(encoder.encode(user.getPassword())).roles(user.getRole()).build());
-        return "hello";
+        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole()).build());
+        return "redirect:/login";
     }
 
     @GetMapping("/")
     public String defaultPage(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
+
         User user = repository.findByUsername(username);
         model.addAttribute("user", user);
         return "default";
