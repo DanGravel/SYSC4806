@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h1>New Account</h1>
+    <form id="newUserForm" action="#" th:action="@{/register}" th:object="${user}" method="post">
+        <label>UserName:</label><br>
+        <input id="username" type="text" th:field="*{username}"/><br>
+        <label>Password:</label><br>
+        <input id="password" type="password" th:field="*{password}"/><br>
+        <select th:field="*{role}">
+            <option value="SUBMITTER">Article Submitter</option>
+            <option value="EDITOR">Editor</option>
+            <option value="REVIEWER">Reviewer</option>
+        </select><br>
+        <input type="submit" value="Submit"/>
+        <input type="reset" value="Reset"/>
+    </form>
+</body>
+</html>
