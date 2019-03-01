@@ -1,5 +1,6 @@
-package app;
+package app.controllers;
 
+import app.UserRepository;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

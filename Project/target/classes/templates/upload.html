@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data" th:action="@{/upload}" action="#">
+        <label>Select File to Upload (PDF, .DOCX, .TXT): </label><input type="file" name="file"> <br />
+        <input type="submit" value="Upload File">
+    </form>
+    <br/>
+
+    <table>
+        <thead>
+            <th>
+                <td>ID</td>
+                <td>File Name</td>
+            </th>
+        </thead>
+        <tbody>
+            <tr th:each="file: ${files}">
+                <td th:text="${file.id}"></td>
+                <td th:text="${file.fileName}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
