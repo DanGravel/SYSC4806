@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class RegisterController {
-    @Autowired
-    private UserRepository repository;
+public class RegisterController extends app.Controller {
 
     private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
@@ -37,17 +35,14 @@ public class RegisterController {
     @PostMapping("/register")
     public String newUser(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
-        repository.save(user);
+        userRepository.save(user);
         inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole()).build());
         return "redirect:/login";
     }
 
     @GetMapping("/")
     public String defaultPage(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
-
-        User user = repository.findByUsername(username);
+        User user = getUser();
         model.addAttribute("user", user);
         return "default";
     }

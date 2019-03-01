@@ -15,12 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Controller
-public class FileUploadController {
+public class FileUploadController extends app.Controller {
     @Autowired
     private FileRepository repository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @GetMapping("/upload")
     public String getFileUploader(Model model) {
@@ -30,16 +27,11 @@ public class FileUploadController {
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
-
-        User user = userRepository.findByUsername(username);
-
         File newFile = new File();
         newFile.setFileName(file.getName());
         newFile.setFileType(file.getContentType());
         newFile.setData(file.getBytes());
-        newFile.setUser(user);
+        newFile.setUser(super.getUser());
 
         repository.save(newFile);
 
