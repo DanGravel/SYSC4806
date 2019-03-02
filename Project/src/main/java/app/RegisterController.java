@@ -1,5 +1,6 @@
 package app;
 
+import app.UserRepository;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,14 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class RegisterController {
-    @Autowired
-    private UserRepository repository;
+public class RegisterController extends app.Controller {
 
     private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
-    PasswordEncoder encoder =
-            PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
     @Autowired
     public RegisterController(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
         this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
@@ -34,22 +33,16 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String newBuddy(@ModelAttribute User user, Model model){
-        repository.save(user);
-        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(encoder.encode(user.getPassword())).roles(user.getRole()).build());
-        return "hello";
+    public String newUser(@ModelAttribute User user){
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole()).build());
+        return "redirect:/login";
     }
 
     @GetMapping("/")
     public String defaultPage(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-        User user = repository.findByUsername(username);
+        User user = getUser();
         model.addAttribute("user", user);
         return "default";
     }

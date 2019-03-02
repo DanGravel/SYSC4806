@@ -1,9 +1,7 @@
 package app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -18,7 +16,12 @@ public class User {
 
     private String role;
 
-    public User() {}
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<File> files;
+
+    public User() {
+        this(null, null, null);
+    }
     public User(String username, String password, String role){
         this.username = username;
         this.password = password;
