@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -44,7 +46,9 @@ public class FileUploadController extends app.Controller {
         newFile.setFileName(file.getOriginalFilename());
         newFile.setFileType(file.getContentType());
         newFile.setData(file.getBytes());
-        newFile.setUser(super.getUser());
+        List users = new ArrayList<User>();
+        users.add(super.getUser());
+        newFile.setUser(users);
 
         repository.save(newFile);
 
@@ -60,7 +64,7 @@ public class FileUploadController extends app.Controller {
     public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
         Optional<File> fileOptional = repository.findById(id);
         File file = fileOptional.get();
-        if (!file.getUser().equals(super.getUser())) {
+        if (!file.getUser().contains(super.getUser())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         HttpHeaders headers = new HttpHeaders();
