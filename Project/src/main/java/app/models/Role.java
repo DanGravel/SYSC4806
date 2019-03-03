@@ -1,6 +1,20 @@
 package app.models;
 
-public class Role {
-    public static final String editor = "EDITOR";
-    public static final String reviewer = "REVIEWER";
+public enum Role {
+    EDITOR("EDITOR"), REVIEWER("REVIEWER"), SUBMITTER("SUBMITTER");
+
+    private String role;
+
+    Role(final String value) {
+        this.role = value;
+    }
+
+    public String getValue() {
+        return role;
+    }
+
+    @Override
+    public String toString() {
+        return this.getValue();
+    }
 }
