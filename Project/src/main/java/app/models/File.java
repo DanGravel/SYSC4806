@@ -7,7 +7,7 @@ public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
@@ -17,11 +17,11 @@ public class File {
     @Lob
     private byte[] data;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,5 +55,13 @@ public class File {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof File)) return false;
+        File f = (File) obj;
+        return f.id == this.id && f.fileName == this.fileName && f.fileType == this.fileType;
     }
 }

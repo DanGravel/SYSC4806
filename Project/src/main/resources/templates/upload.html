@@ -16,12 +16,14 @@
             <th>
                 <td>ID</td>
                 <td>File Name</td>
+                <td>Download</td>
             </th>
         </thead>
         <tbody>
             <tr th:each="file: ${files}">
                 <td th:text="${file.id}"></td>
                 <td th:text="${file.fileName}"></td>
+                <td><a th:href="@{/getfile/{id}(id=${file.id})}">Download</a></td>
             </tr>
         </tbody>
     </table>
