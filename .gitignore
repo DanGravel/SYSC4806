@@ -32,6 +32,13 @@ Project/.idea/**/libraries
 # .idea/*.iml
 # .idea/modules
 
+# Object files do not need to be committed
+*.class
+
+# Specific to developer
+.idea/workspace.xml
+.idea/misc.xml
+
 # CMake
 cmake-build-*/
 
