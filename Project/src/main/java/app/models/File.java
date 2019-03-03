@@ -7,7 +7,7 @@ public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
@@ -17,11 +17,11 @@ public class File {
     @Lob
     private byte[] data;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
