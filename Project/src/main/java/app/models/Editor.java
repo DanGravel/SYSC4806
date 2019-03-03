@@ -1,3 +1,5 @@
+package app.models;
+
 public class Editor {
 
     public void acceptArticle(Article article) {

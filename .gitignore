@@ -33,11 +33,11 @@ Project/.idea/**/libraries
 # .idea/modules
 
 # Object files do not need to be committed
-*.class
+Project/target/*
 
 # Specific to developer
-.idea/workspace.xml
-.idea/misc.xml
+Project/.idea/workspace.xml
+Project/.idea/misc.xml
 
 # CMake
 cmake-build-*/
