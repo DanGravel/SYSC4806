@@ -19,9 +19,35 @@
             </th>
         </thead>
         <tbody>
-            <tr th:each="file: ${files}">
-                <td th:text="${file.id}"></td>
-                <td th:text="${file.fileName}"></td>
+            <tr th:each="article: ${articles}">
+                <td th:text="${article.id}"></td>
+                <td th:text="${article.fileName}"></td>
+                <div th:switch="${role}">
+                    <td th:case="SUBMITTER" th:text="${article.getState()}"></td>
+                    <div th:case="EDITOR">
+                        <td>
+                            <form method="PATCH" th:action="@{/acceptArticle}" action="#">
+                                <input type="hidden" name="articleId" th:value="${article.id}" />
+                                <input type="submit" value="Accept">
+                            </form>
+                        </td>
+                        <td>
+                            <form method="PATCH" th:action="@{/rejectArticle}" action="#">
+                                <input type="hidden" name="articleId" th:value="${article.id}" />
+                                <input type="submit" value="Reject">
+                            </form>
+                        </td>
+                    </div>
+                    <div th:case="REVIEWER">
+                        <td>
+                            <form method="PATCH" th:action="@{/addReviewer}" action="#">
+                                <input type="hidden" name="articleId" th:value="${article.id}" />
+                                <input type="submit" value="Review">
+                            </form>
+                        </td>
+                        <td th:text="${article.getState()}"></td>
+                    </div>
+                </div>
             </tr>
         </tbody>
     </table>

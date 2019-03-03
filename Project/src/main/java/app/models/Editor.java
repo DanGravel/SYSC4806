@@ -1,7 +1,7 @@
 package app.models;
 
-public class Editor {
-
+public class Editor extends User
+{
     public void acceptArticle(Article article) {
         if (article == null) {
             throw new NullPointerException("acceptArticle was passed a null article");

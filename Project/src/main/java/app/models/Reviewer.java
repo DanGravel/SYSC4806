@@ -1,11 +1,26 @@
 package app.models;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Reviewer
+@Entity
+public class Reviewer extends User
 {
-    private ArrayList<Article> assignedArticles;
-    private ArrayList<Review> reviews;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @OneToMany(mappedBy = "reviewer")
+    private List<Article> assignedArticles;
+    @OneToMany(mappedBy = "reviewer")
+    private List<Review> reviews;
+
+    public Reviewer(String username, String password, String role)
+    {
+        super(username, password, role);
+        assignedArticles = new ArrayList<>();
+        reviews = new ArrayList<>();
+    }
 
     public void assignArticle(Article article)
     {
