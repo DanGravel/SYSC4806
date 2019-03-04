@@ -3,7 +3,6 @@ package app;
 import app.models.ArticleStatus;
 import app.models.File;
 import app.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,8 +22,6 @@ import java.util.Optional;
 
 @Controller
 public class FileUploadController extends app.Controller {
-    @Autowired
-    private FileRepository repository;
 
     /***
      * Gets a list of files for a user
@@ -34,7 +31,7 @@ public class FileUploadController extends app.Controller {
     @GetMapping("/upload")
     public String getFileUploader(Model model) {
         User user = super.getUser();
-        model.addAttribute("files", repository.findByUser(user));
+        model.addAttribute("files", fileRepository.findByUser(user));
         return "upload";
     }
 
@@ -54,7 +51,7 @@ public class FileUploadController extends app.Controller {
         List users = new ArrayList<User>();
         users.add(super.getUser());
         newFile.setUser(users);
-        repository.save(newFile);
+        fileRepository.save(newFile);
 
         return "redirect:/upload";
     }
@@ -66,7 +63,7 @@ public class FileUploadController extends app.Controller {
      */
     @GetMapping("/getfile/{id}")
     public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
-        Optional<File> fileOptional = repository.findById(id);
+        Optional<File> fileOptional = fileRepository.findById(id);
         File file = fileOptional.get();
         if (!file.getUser().contains(super.getUser())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
