@@ -24,6 +24,7 @@ public class User {
     public User() {
         this(null, null, null);
     }
+
     public User(String username, String password, String role){
         this.username = username;
         this.password = password;
@@ -36,6 +37,9 @@ public class User {
                 }
                 case Role.editor: {
                     this.role = new Editor();
+                }
+                case Role.submitter: {
+                    this.role = new Submitter();
                 }
             }
         }
@@ -84,7 +88,7 @@ public class User {
         }
     }
 
-    public void addAuthorizedArticles(Article article)
+    public void addAuthorizedArticle(Article article)
     {
         authorizedArticles.add(article);
     }

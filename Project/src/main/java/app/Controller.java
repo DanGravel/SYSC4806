@@ -9,8 +9,7 @@ public class Controller {
     @Autowired
     protected UserRepository userRepository;
     @Autowired
-    protected FileRepository fileRepository;
-
+    protected ArticleRepository articleRepository;
 
     @Autowired
     protected RoleRepository roleRepository;

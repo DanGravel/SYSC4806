@@ -11,16 +11,20 @@ public class Reviewer extends Role
     private List<Article> assignedArticles;
     @OneToMany(mappedBy = "reviewer")
     private List<Review> reviews;
-    private final String name;
 
     public Reviewer()
     {
-        this.name = Role.reviewer;
+        name = Role.reviewer;
         assignedArticles = new ArrayList<>();
         reviews = new ArrayList<>();
     }
 
     public void addAssignedArticle(Article article) {
         assignedArticles.add(article);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

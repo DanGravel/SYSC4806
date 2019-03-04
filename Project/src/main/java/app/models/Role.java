@@ -13,10 +13,7 @@ public abstract class Role {
     public static final String reviewer = "REVIEWER";
     public static final String submitter = "SUBMITTER";
 
-    private String name;
+    protected String name;
 
-    @Override
-    public String toString() {
-        return name;
-    }
+    public abstract String toString();
 }

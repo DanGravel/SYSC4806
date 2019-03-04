@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 @Entity
 public class Editor extends Role
 {
-    private final String name;
-
     public Editor() {
         name = Role.editor;
     }
@@ -47,5 +45,10 @@ public class Editor extends Role
         else {
             throw new InvalidStateException("assignArticle was called on a user without the Reviewer role");
         }
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -14,7 +14,7 @@ public class EditorController extends app.Controller {
      */
     @GetMapping("/editor")
     public String getFileUploader(Model model) {
-        model.addAttribute("files", fileRepository.findAll());
+        model.addAttribute("files", articleRepository.findAll());
         return "editor";
     }
 }
