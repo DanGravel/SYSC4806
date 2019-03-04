@@ -1,6 +1,9 @@
 language: java
 jdk:
   - oraclejdk8
+before_script: cd Project
+before_install: cd Project
+script: mvn clean verify
 deploy:
   provider: heroku
   api-key:
