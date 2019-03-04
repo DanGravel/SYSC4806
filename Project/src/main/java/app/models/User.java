@@ -1,8 +1,6 @@
 package app.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class User {
@@ -15,34 +13,17 @@ public class User {
 
     private String password;
 
-    @OneToOne
+    @Enumerated(EnumType.STRING)
     private Role role;
-
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Article> authorizedArticles;
 
     public User() {
         this(null, null, null);
     }
 
-    public User(String username, String password, String role){
+    public User(String username, String password, Role role){
         this.username = username;
         this.password = password;
-        authorizedArticles = new ArrayList<>();
-
-        if (role != null) {
-            switch (role) {
-                case Role.reviewer: {
-                    this.role = new Reviewer();
-                }
-                case Role.editor: {
-                    this.role = new Editor();
-                }
-                case Role.submitter: {
-                    this.role = new Submitter();
-                }
-            }
-        }
+        this.role = role;
     }
 
     public long getId() {
@@ -73,32 +54,11 @@ public class User {
         this.role = role;
     }
 
-    public void setRole(String role) {
-        if (role != null) {
-            switch (role) {
-                case Role.reviewer: {
-                    this.role = new Reviewer();
-                    break;
-                }
-                case Role.editor: {
-                    this.role = new Editor();
-                    break;
-                }
-            }
-        }
-    }
-
-    public void addAuthorizedArticle(Article article)
-    {
-        authorizedArticles.add(article);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User u = (User) o;
-        return u.id == this.id && u.username == this.username && u.role == this.role
-                && u.authorizedArticles.equals(this.authorizedArticles);
+        return u.id == this.id && u.username == this.username && u.role == this.role;
     }
 }

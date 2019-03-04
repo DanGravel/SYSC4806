@@ -8,11 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Controller {
     @Autowired
     protected UserRepository userRepository;
-    @Autowired
-    protected ArticleRepository articleRepository;
 
     @Autowired
-    protected RoleRepository roleRepository;
+    protected ArticleRepository articleRepository;
 
     public User getUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

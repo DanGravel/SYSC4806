@@ -2,6 +2,7 @@ package app.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -11,51 +12,21 @@ public class Article
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<User> users;
     private String fileName;
     private String fileType;
-
-    @ManyToOne
-    private Reviewer reviewer;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Review review;
-    private enum ArticleState {
-        SUBMITTED("Submitted"),
-        IN_REVIEW("In Reivew"),
-        ACCEPTED("Accepted"),
-        REJECTED("Rejected");
-
-        private final String text;
-
-        private ArticleState(String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
-    }
+    private String review;
     private ArticleState state;
+
+    private Date date;
 
     @Lob
     private byte[] data;
 
-    public Article(Reviewer reviewer) {
-        this.reviewer = reviewer;
-        this.users = new ArrayList<>();
-
-        if (reviewer != null) {
-            state = ArticleState.IN_REVIEW;
-        }
-        else {  // reviewer == null
-            state = ArticleState.SUBMITTED;
-        }
-    }
-
     public Article() {
-        this(null);
+        this.users = new ArrayList<>();
+        state = ArticleState.SUBMITTED;
     }
 
     public long getId() {
@@ -104,33 +75,49 @@ public class Article
         this.data = data;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getState() {
         return state.toString();
     }
 
-    public Review getReview() {
+    public String getReview() {
         return review;
     }
 
-    public void setReview(Review review) {
+    public void setReview(String review) {
         this.review = review;
     }
 
-    public Reviewer getReviewer() {
-        return reviewer;
-    }
+    public void addReviewer(Role caller, User user) {
+        if (user == null) {
+            throw new NullPointerException("addReviewer was passed a null user");
+        }
 
-    public void setReviewer(Reviewer reviewer) {
-        if (this.reviewer == null) {
-            this.reviewer = reviewer;
+        if (!(user.getRole() == Role.REVIEWER)) {
+            throw new IllegalStateException("addReviewer was called on a user without the Reviewer role");
+        }
+
+        if (caller == Role.EDITOR) {
             this.state = ArticleState.IN_REVIEW;
+            addAuthorizedUser(user);
         }
-        else {  // this.reviewer != null
-            throw new IllegalStateException("setReviewer was called on an article with an existing reviewer");
+        else {
+            throw new IllegalStateException("Non-editor called addReviewer");
         }
     }
 
-    public void setAccepted(boolean accepted) {
+    public void setAccepted(boolean accepted, Role caller) {
+        if (!(caller == Role.EDITOR)) {
+            throw new IllegalStateException("Non-editor called setAccepted");
+        }
+
         if (review != null) {
             state = (accepted) ? ArticleState.ACCEPTED : ArticleState.REJECTED;
         }

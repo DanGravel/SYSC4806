@@ -11,10 +11,10 @@
         <input id="username" type="text" th:field="*{username}"/><br>
         <label>Password:</label><br>
         <input id="password" type="password" th:field="*{password}"/><br>
-        <select name="roleString">
-            <option value="SUBMITTER">Article Submitter</option>
-            <option value="EDITOR">Editor</option>
-            <option value="REVIEWER">Reviewer</option>
+        <select th:field="*{role}">
+            <option th:value="${T(app.models.Role).SUBMITTER}">Article Submitter</option>
+            <option th:value="${T(app.models.Role).EDITOR}">Editor</option>
+            <option th:value="${T(app.models.Role).REVIEWER}">Reviewer</option>
         </select><br>
         <input type="submit" value="Submit"/>
         <input type="reset" value="Reset"/>

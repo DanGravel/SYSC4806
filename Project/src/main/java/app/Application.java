@@ -23,25 +23,20 @@ public class Application {
 
     //Temporary test data
     @Bean
-    public CommandLineRunner demo(ArticleRepository articleRepository, RoleRepository roleRepository, UserRepository userRepository, InMemoryUserDetailsManager inMemoryUserDetailsManage) {
+    public CommandLineRunner demo(ArticleRepository articleRepository, UserRepository userRepository, InMemoryUserDetailsManager inMemoryUserDetailsManage) {
         return (args) -> {
             PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
             // save a couple of customers
             Article article = new Article();
-            User user1 = new User("test1", encoder.encode("password"), Role.submitter);
-            User user2 = new User("test2", encoder.encode("password"), Role.editor);
-            User user3 = new User("test3", encoder.encode("password"), Role.reviewer);
+            User user1 = new User("test1", encoder.encode("password"), Role.SUBMITTER);
+            User user2 = new User("test2", encoder.encode("password"), Role.EDITOR);
+            User user3 = new User("test3", encoder.encode("password"), Role.REVIEWER);
 
             article.setFileName("FileTest1");
             List<User> users = new ArrayList<User>();
             users.add(user1);
             users.add(user3);
             article.setAuthorizedUsers(users);
-            user1.addAuthorizedArticle(article);
-
-            roleRepository.save(user1.getRole());
-            roleRepository.save(user2.getRole());
-            roleRepository.save(user3.getRole());
 
             userRepository.save(user1);
             userRepository.save(user2);

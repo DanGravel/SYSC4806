@@ -23,37 +23,6 @@
             <tr th:each="article: ${articles}">
                 <td th:text="${article.id}"></td>
                 <td th:text="${article.fileName}"></td>
-                <div th:switch="${role}">
-                    <td th:case="${T(app.models.Submitter)}" th:text="${article.getState()}"></td>
-                    <div th:case="${T(app.models.Editor)}">
-                        <td>
-                            <form method="PATCH" th:action="@{/acceptArticle}" action="#">
-                                <input type="hidden" name="articleId" th:value="${article.id}" />
-                                <input type="submit" value="Accept">
-                            </form>
-                        </td>
-                        <td>
-                            <form method="PATCH" th:action="@{/rejectArticle}" action="#">
-                                <input type="hidden" name="articleId" th:value="${article.id}" />
-                                <input type="submit" value="Reject">
-                            </form>
-                        </td>
-                        <td>
-                            <form method="PATCH" th:action="@{/addReviewer}" action="#">
-                                <input type="hidden" name="articleId" th:value="${article.id}" />
-                                <select name="reviewer">
-                                    <option value="0">Select Reviewer</option>
-                                    <option th:each="user : ${reviewers}" th:value="${user.getId()}" th:text="${user.getUsername()}"></option>
-                                </select>
-                                <input type="submit" value="Add Reviewer">
-                            </form>
-                        </td>
-                        <td th:text="${article.getState()}"></td>
-                    </div>
-                    <div th:case="${T(app.models.Reviewer)}">
-                        <td th:text="${article.getState()}"></td>
-                    </div>
-                </div>
                 <td><a th:href="@{/getfile/{id}(id=${article.id})}">Download</a></td>
             </tr>
         </tbody>

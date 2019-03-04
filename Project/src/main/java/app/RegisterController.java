@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RegisterController extends app.Controller {
@@ -31,12 +30,10 @@ public class RegisterController extends app.Controller {
     }
 
     @PostMapping("/register")
-    public String newUser(@ModelAttribute User user, @RequestParam("roleString")String roleString){
-        user.setRole(roleString);
+    public String newUser(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
-        roleRepository.save(user.getRole());
         userRepository.save(user);
-        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(roleString).build());
+        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole().toString()).build());
         return "redirect:/login";
     }
 
