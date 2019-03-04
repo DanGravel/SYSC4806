@@ -1,5 +1,6 @@
 package app;
 
+import app.models.ArticleStatus;
 import app.models.File;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -45,7 +49,7 @@ public class FileUploadController extends app.Controller {
         newFile.setFileType(file.getContentType());
         newFile.setData(file.getBytes());
         newFile.setUser(super.getUser());
-
+        newFile.setStatus(ArticleStatus.SUBMITTED.toString());
         repository.save(newFile);
 
         return "redirect:/upload";
