@@ -2,6 +2,7 @@ package app.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class File {
@@ -10,8 +11,8 @@ public class File {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private User user;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> user;
     private String fileName;
     private String fileType;
     private String status;
@@ -28,11 +29,11 @@ public class File {
         this.id = id;
     }
 
-    public User getUser() {
+    public List<User> getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(List<User> user) {
         this.user = user;
     }
 

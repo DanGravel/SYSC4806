@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" />
 <head>
-    <title>Spring Security Example </title>
+    <title>Login</title>
 </head>
 <body>
 <div th:if="${param.error}">
@@ -11,9 +11,18 @@
     You have been logged out.
 </div>
 <form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    <div>
+        <label> User Name</label>
+        <input type="text" name="username"/>
+    </div>
+    <div>
+        <label> Password</label>
+        <input type="password" name="password"/>
+    </div>
+    <div>
+        <button type="submit">Login</button>
+        <button onclick="location.href='/register'" type="button">Register</button>
+    </div>
 </form>
 </body>
 </html>

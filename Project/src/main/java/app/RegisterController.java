@@ -1,10 +1,8 @@
 package app;
 
-import app.UserRepository;
+import app.models.Role;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -36,7 +34,8 @@ public class RegisterController extends app.Controller {
     public String newUser(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole()).build());
+        String role = Role.valueOf(user.getRole()).toString();
+        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(role).build());
         return "redirect:/login";
     }
 
@@ -47,18 +46,8 @@ public class RegisterController extends app.Controller {
         return "default";
     }
 
-    @GetMapping("/home")
-    public String getHome(){
-        return "home";
-    }
-
     @GetMapping("/login")
     public String getLogin() {
         return "login";
-    }
-
-    @GetMapping("/hello")
-    public String getHello(){
-        return "hello";
     }
 }

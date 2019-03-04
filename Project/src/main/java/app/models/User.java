@@ -17,7 +17,7 @@ public class User {
 
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<File> files;
 
     public User() {
