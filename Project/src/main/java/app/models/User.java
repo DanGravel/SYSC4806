@@ -55,4 +55,13 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User u = (User) o;
+        return u.id == this.id && u.username == this.username && u.role == this.role
+                && u.files.equals(this.files);
+    }
 }

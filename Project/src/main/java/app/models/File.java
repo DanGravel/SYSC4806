@@ -56,4 +56,12 @@ public class File {
     public void setData(byte[] data) {
         this.data = data;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof File)) return false;
+        File f = (File) obj;
+        return f.id == this.id && f.fileName == this.fileName && f.fileType == this.fileType;
+    }
 }
