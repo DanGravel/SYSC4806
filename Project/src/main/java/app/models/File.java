@@ -1,6 +1,7 @@
 package app.models;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,8 @@ public class File {
     private List<User> user;
     private String fileName;
     private String fileType;
+    private ArticleStatus status;
+    private Date date;
 
     @Lob
     private byte[] data;
@@ -57,6 +60,14 @@ public class File {
     public void setData(byte[] data) {
         this.data = data;
     }
+
+    public void setStatus(ArticleStatus status) { this.status = status;}
+
+    public ArticleStatus getStatus() { return this.status;}
+
+    public void setDate(Date date) {this.date = date;}
+
+    public Date getDate() {return this.date;}
 
     @Override
     public boolean equals(Object obj) {

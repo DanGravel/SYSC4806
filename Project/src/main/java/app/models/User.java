@@ -1,6 +1,7 @@
 package app.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+        files = new ArrayList<>();
     }
 
     public long getId() {
@@ -54,6 +56,11 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void addFiles(File f)
+    {
+        this.files.add(f);
     }
 
     @Override

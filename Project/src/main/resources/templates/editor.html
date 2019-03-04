@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>All submitted articles</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>File Name</th>
+            <th>Article Status</th>
+            <th>Reviewer</th>
+            <th>Due Date</th>
+        </tr>
+        <tbody>
+            <tr th:each="file: ${files}">
+                <td th:text="${file.id}"></td>
+                <td th:text="${file.fileName}"></td>
+                <td th:text="${file.status}"></td>
+                <td th:text="${file.user[1].username}"></td>
+                <td th:text="${file.date}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
