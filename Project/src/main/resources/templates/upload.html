@@ -23,8 +23,8 @@
                 <td th:text="${article.id}"></td>
                 <td th:text="${article.fileName}"></td>
                 <div th:switch="${role}">
-                    <td th:case="SUBMITTER" th:text="${article.getState()}"></td>
-                    <div th:case="EDITOR">
+                    <td th:case="${T(app.models.Submitter)}" th:text="${article.getState()}"></td>
+                    <div th:case="${T(app.models.Editor)}">
                         <td>
                             <form method="PATCH" th:action="@{/acceptArticle}" action="#">
                                 <input type="hidden" name="articleId" th:value="${article.id}" />
@@ -37,8 +37,9 @@
                                 <input type="submit" value="Reject">
                             </form>
                         </td>
+                        <td th:text="${article.getState()}"></td>
                     </div>
-                    <div th:case="REVIEWER">
+                    <div th:case="${T(app.models.Reviewer)}">
                         <td>
                             <form method="PATCH" th:action="@{/addReviewer}" action="#">
                                 <input type="hidden" name="articleId" th:value="${article.id}" />

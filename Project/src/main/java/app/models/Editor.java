@@ -1,7 +1,16 @@
 package app.models;
 
-public class Editor extends User
+import javax.persistence.Entity;
+
+@Entity
+public class Editor extends Role
 {
+    private final String name;
+
+    public Editor() {
+        name = Role.editor;
+    }
+
     public void acceptArticle(Article article) {
         if (article == null) {
             throw new NullPointerException("acceptArticle was passed a null article");

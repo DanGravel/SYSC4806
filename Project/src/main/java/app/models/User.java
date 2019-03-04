@@ -14,7 +14,8 @@ public class User {
 
     private String password;
 
-    private String role;
+    @OneToOne
+    private Role role;
 
     @OneToMany(mappedBy = "submitter", cascade = CascadeType.ALL)
     private List<Article> submittedArticles;
@@ -25,7 +26,17 @@ public class User {
     public User(String username, String password, String role){
         this.username = username;
         this.password = password;
-        this.role = role;
+
+        if (role != null) {
+            switch (role) {
+                case Role.reviewer: {
+                    this.role = new Reviewer();
+                }
+                case Role.editor: {
+                    this.role = new Editor();
+                }
+            }
+        }
     }
 
     public long getId() {
@@ -48,11 +59,26 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void setRole(String role) {
+        if (role != null) {
+            switch (role) {
+                case Role.reviewer: {
+                    this.role = new Reviewer();
+                    break;
+                }
+                case Role.editor: {
+                    this.role = new Editor();
+                    break;
+                }
+            }
+        }
     }
 }

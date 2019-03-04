@@ -5,19 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Reviewer extends User
+public class Reviewer extends Role
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
     @OneToMany(mappedBy = "reviewer")
     private List<Article> assignedArticles;
     @OneToMany(mappedBy = "reviewer")
     private List<Review> reviews;
+    private final String name;
 
-    public Reviewer(String username, String password, String role)
+    public Reviewer()
     {
-        super(username, password, role);
+        this.name = Role.reviewer;
         assignedArticles = new ArrayList<>();
         reviews = new ArrayList<>();
     }

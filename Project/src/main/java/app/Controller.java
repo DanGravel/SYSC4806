@@ -9,6 +9,9 @@ public class Controller {
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    protected RoleRepository roleRepository;
+
     public User getUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();

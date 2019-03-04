@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
@@ -11,7 +11,7 @@
         <input id="username" type="text" th:field="*{username}"/><br>
         <label>Password:</label><br>
         <input id="password" type="password" th:field="*{password}"/><br>
-        <select th:field="*{role}">
+        <select name="roleString">
             <option value="SUBMITTER">Article Submitter</option>
             <option value="EDITOR">Editor</option>
             <option value="REVIEWER">Reviewer</option>
