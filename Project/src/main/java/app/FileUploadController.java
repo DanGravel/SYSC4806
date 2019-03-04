@@ -53,6 +53,7 @@ public class FileUploadController extends app.Controller {
         newFile.setStatus(ArticleStatus.SUBMITTED.toString());
         List users = new ArrayList<User>();
         users.add(super.getUser());
+        newFile.setUser(users);
         repository.save(newFile);
 
         return "redirect:/upload";
