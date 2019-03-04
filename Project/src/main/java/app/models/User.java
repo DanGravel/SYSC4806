@@ -1,6 +1,7 @@
 package app.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,7 @@ public class User {
     public User(String username, String password, String role){
         this.username = username;
         this.password = password;
+        authorizedArticles = new ArrayList<>();
 
         if (role != null) {
             switch (role) {
@@ -80,6 +82,11 @@ public class User {
                 }
             }
         }
+    }
+
+    public void addAuthorizedArticles(Article article)
+    {
+        authorizedArticles.add(article);
     }
 
     @Override

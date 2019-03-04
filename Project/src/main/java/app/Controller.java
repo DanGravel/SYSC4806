@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class Controller {
     @Autowired
     protected UserRepository userRepository;
+    @Autowired
+    protected FileRepository fileRepository;
+
 
     @Autowired
     protected RoleRepository roleRepository;
