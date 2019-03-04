@@ -60,6 +60,9 @@ public class FileUploadController extends app.Controller {
     public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
         Optional<File> fileOptional = repository.findById(id);
         File file = fileOptional.get();
+        if (file.getUser() != super.getUser()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(file.getFileType()));
         //sets the file name
