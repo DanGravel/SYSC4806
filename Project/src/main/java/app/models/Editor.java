@@ -1,7 +1,5 @@
 package app.models;
 
-import sun.plugin.dom.exception.InvalidStateException;
-
 import javax.persistence.Entity;
 
 @Entity
@@ -43,7 +41,7 @@ public class Editor extends Role
             reviewer.addAssignedArticle(article);
         }
         else {
-            throw new InvalidStateException("assignArticle was called on a user without the Reviewer role");
+            throw new IllegalStateException("assignArticle was called on a user without the Reviewer role");
         }
     }
 
