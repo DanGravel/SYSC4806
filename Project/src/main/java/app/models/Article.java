@@ -1,6 +1,8 @@
 package app.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Article
@@ -9,8 +11,8 @@ public class Article
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private User submitter;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> users;
     private String fileName;
     private String fileType;
 
@@ -42,6 +44,7 @@ public class Article
 
     public Article(Reviewer reviewer) {
         this.reviewer = reviewer;
+        this.users = new ArrayList<>();
 
         if (reviewer != null) {
             state = ArticleState.IN_REVIEW;
@@ -63,12 +66,18 @@ public class Article
         this.id = id;
     }
 
-    public User getSubmitter() {
-        return submitter;
+    public List<User> getAuthorizedUsers() {
+        return users;
     }
 
-    public void setSubmitter(User submitter) {
-        this.submitter = submitter;
+    public void setAuthorizedUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public void addAuthorizedUser(User user) {
+        if (!users.contains(user)) {
+            users.add(user);
+        }
     }
 
     public String getFileName() {

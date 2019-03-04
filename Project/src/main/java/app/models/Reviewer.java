@@ -20,12 +20,7 @@ public class Reviewer extends Role
         reviews = new ArrayList<>();
     }
 
-    public void assignArticle(Article article)
-    {
-        if (article == null) {
-            throw new NullPointerException("assignArticle was passed a null article");
-        }
-        article.setReviewer(this);
+    public void addAssignedArticle(Article article) {
         assignedArticles.add(article);
     }
 }

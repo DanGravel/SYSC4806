@@ -47,18 +47,8 @@ public class RegisterController extends app.Controller {
         return "default";
     }
 
-    @GetMapping("/home")
-    public String getHome(){
-        return "home";
-    }
-
     @GetMapping("/login")
     public String getLogin() {
         return "login";
-    }
-
-    @GetMapping("/hello")
-    public String getHello(){
-        return "hello";
     }
 }

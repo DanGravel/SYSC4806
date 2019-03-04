@@ -17,8 +17,8 @@ public class User {
     @OneToOne
     private Role role;
 
-    @OneToMany(mappedBy = "submitter", cascade = CascadeType.ALL)
-    private List<Article> submittedArticles;
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Article> authorizedArticles;
 
     public User() {
         this(null, null, null);
@@ -80,5 +80,14 @@ public class User {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User u = (User) o;
+        return u.id == this.id && u.username == this.username && u.role == this.role
+                && u.authorizedArticles.equals(this.authorizedArticles);
     }
 }
