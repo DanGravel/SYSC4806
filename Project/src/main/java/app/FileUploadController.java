@@ -47,7 +47,7 @@ public class FileUploadController extends app.Controller {
         newFile.setFileName(file.getOriginalFilename());
         newFile.setFileType(file.getContentType());
         newFile.setData(file.getBytes());
-        newFile.setStatus(ArticleStatus.SUBMITTED.toString());
+        newFile.setStatus(ArticleStatus.SUBMITTED);
         List users = new ArrayList<User>();
         users.add(super.getUser());
         newFile.setUser(users);

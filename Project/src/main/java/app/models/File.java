@@ -15,7 +15,7 @@ public class File {
     private List<User> user;
     private String fileName;
     private String fileType;
-    private String status;
+    private ArticleStatus status;
     private Date date;
 
     @Lob
@@ -61,9 +61,9 @@ public class File {
         this.data = data;
     }
 
-    public void setStatus(String status) { this.status = status;}
+    public void setStatus(ArticleStatus status) { this.status = status;}
 
-    public String getStatus() { return this.status;}
+    public ArticleStatus getStatus() { return this.status;}
 
     public void setDate(Date date) {this.date = date;}
 

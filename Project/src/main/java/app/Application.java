@@ -33,12 +33,12 @@ public class Application {
             User user2 = new User("test2", encoder.encode("password"), Role.EDITOR.toString());
             User user3 = new User("test3", encoder.encode("password"), Role.REVIEWER.toString());
 
-            file.setFileName("Test1");
+            file.setFileName("FileTest1");
             List<User> users = new ArrayList<User>();
             users.add(user1);
             users.add(user3);
             file.setUser(users);
-            file.setStatus(ArticleStatus.SUBMITTED.toString());
+            file.setStatus(ArticleStatus.SUBMITTED);
             user1.addFiles(file);
 
             userRepository.save(user1);
