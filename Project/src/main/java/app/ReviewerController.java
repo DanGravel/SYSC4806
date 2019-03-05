@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import app.models.Article;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +31,8 @@ public class ReviewerController extends app.Controller {
      * @param id The id of the article
      * @return The review view
      */
-    @GetMapping("/review")
-    public String getReviewer(Model model, @RequestParam String id) {
+    @GetMapping("/review/{id}")
+    public String getReviewer(Model model, @PathVariable String id) {
         model.addAttribute("article", articleRepository.findById(Long.parseLong(id)).get());
         return "review";
     }

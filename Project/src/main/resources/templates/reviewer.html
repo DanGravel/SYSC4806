@@ -18,12 +18,7 @@
             <td th:text="${article.fileName}"></td>
             <td th:text="${article.state}"></td>
             <td th:text="${article.date}"></td>
-            <td>
-                <form method="GET" th:action="@{/review}" action="#">
-                    <input type="hidden" name="id" th:value="${article.id}" />
-                    <input type="submit" value="Review" />
-                </form>
-            </td>
+            <td><a th:href="@{/review/{id}(id=${article.id})}">Submit Review</a></td>
         </tr>
         </tbody>
     </table>
