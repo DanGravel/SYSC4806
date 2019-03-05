@@ -57,14 +57,6 @@ public class FileUploadControllerTest {
     @Test
     @WithMockUser(username = "user", password = "password", roles = {"SUBMITTER"})
     public void testUploadFile() throws Exception {
-        /*MockHttpServletRequest request = new MockHttpServletRequest();
-        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
-        CsrfToken csrfToken = httpSessionCsrfTokenRepository
-                .generateToken(request);
-
-        Map map = new HashMap();
-        map.put("org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN",
-                csrfToken);*/
         MockMultipartFile mockFile = new MockMultipartFile("file","filename.txt","application/pdf", "wewewewewewewewew".getBytes());
 
         mock.perform(MockMvcRequestBuilders.multipart("/upload")
