@@ -37,7 +37,7 @@ public class FileUploadController extends app.Controller {
     @PostMapping("/upload")
     public String uploadFile(Model model, @RequestParam("file") MultipartFile file) throws IOException {
         Article newArticle = new Article();
-        newArticle.setFileName(file.getName());
+        newArticle.setFileName(file.getOriginalFilename());
         newArticle.setFileType(file.getContentType());
         newArticle.setData(file.getBytes());
         newArticle.addAuthorizedUser(super.getUser());
