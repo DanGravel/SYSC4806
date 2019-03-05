@@ -1,5 +1,7 @@
 package app;
 
+import app.Utils.StringUtils;
+import app.exceptions.BadFileException;
 import app.models.Article;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
@@ -36,6 +39,11 @@ public class FileUploadController extends app.Controller {
      */
     @PostMapping("/upload")
     public String uploadFile(Model model, @RequestParam("file") MultipartFile file) throws IOException {
+        if (file == null || StringUtils.isNullOrEmpty(file.getOriginalFilename())
+                                || StringUtils.isNullOrEmpty(file.getContentType()) || file.getBytes().length <= 0) {
+            //This is how spring handles bad requests, throws exceptions.
+            throw new BadFileException();
+        }
         Article newArticle = new Article();
         newArticle.setFileName(file.getOriginalFilename());
         newArticle.setFileType(file.getContentType());
@@ -44,7 +52,6 @@ public class FileUploadController extends app.Controller {
         Article article = new Article();
 
         articleRepository.save(newArticle);
-
         return "redirect:/upload";
     }
 
