@@ -18,14 +18,38 @@ The project also has CI integration with Travis CI. There are unit tests written
 
 **DB Schema**
 
-The DB used by us currently is a memory DB through a CrudRespository. We have created multiple models and made repositories for the models. The schema for those models can be seen below:
+The DB used by us currently is a memory DB through a CrudRespository. We have created multiple models and made repositories for the models. 
+The schema for those models can be seen below (Made to look like a sql database schema):
 
 Table: User
 
-| Name      | Type    | Key      | IsNull    |
-|:---------:|:-------:|:--------:|:---------:|
-| id        | int     | Primary  | not null  |
-| password  | string  | N/A      | not null  |
-| role      | string  | N/A      | not null  |
+Description: Holds information on the User. The user can have a role of Reviewer, Submitter or Editor.
+
+| Name      | Type    | Key      |
+|:---------:|:-------:|:--------:|
+| id        | int     | Primary  |
+| password  | string  | N/A      |
+| role      | string  | N/A      |
  
 Table: Article
+
+Description: Holds Article information. Keeps track of the state of the review.
+
+| Name      | Type    | Key      |
+|:---------:|:-------:|:--------:|
+| id        | int     | Primary  |
+| filename  | string  |          |
+| filetype  | string  |          |
+| review    | string  |          |
+| state     | string  |          |   
+| date      | Date    |          |   
+| data      | Blob    |          |
+
+Table: Article_User
+
+Description: Many-To-Many table between Users and Articles. Multiple users will be associated to a file and a User can also have many files hence the Many-To-Many relationship.
+
+| Name        | Type    | Key      |
+|:---------  :|:-------:|:--------:|
+| article_id  | int     | foreign  |
+| user_id     | int     | foreign  |
