@@ -22,17 +22,15 @@ The DB used by us currently is a memory DB through a CrudRespository. We have cr
 The schema for those models can be seen below (Made to look like a sql database schema):
 
 Table: User
-
 Description: Holds information on the User. The user can have a role of Reviewer, Submitter or Editor.
 
 | Name      | Type    | Key      |
 |:---------:|:-------:|:--------:|
 | id        | int     | Primary  |
-| password  | string  | N/A      |
-| role      | string  | N/A      |
+| password  | string  |          |
+| role      | string  |          |
  
 Table: Article
-
 Description: Holds Article information. Keeps track of the state of the review.
 
 | Name      | Type    | Key      |
@@ -46,10 +44,9 @@ Description: Holds Article information. Keeps track of the state of the review.
 | data      | Blob    |          |
 
 Table: Article_User
-
 Description: Many-To-Many table between Users and Articles. Multiple users will be associated to a file and a User can also have many files hence the Many-To-Many relationship.
 
 | Name        | Type    | Key      |
-|:---------  :|:-------:|:--------:|
+|:-----------:|:-------:|:--------:|
 | article_id  | int     | foreign  |
 | user_id     | int     | foreign  |
