@@ -36,7 +36,7 @@ public class Application {
             List<User> users = new ArrayList<User>();
             users.add(user1);
             users.add(user3);
-            article.setAuthorizedUsers(users);
+            article.setUsers(users);
 
             userRepository.save(user1);
             userRepository.save(user2);
