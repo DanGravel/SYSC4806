@@ -27,7 +27,6 @@ public class FileUploadController extends app.Controller {
     @GetMapping("/upload")
     public String getFileUploader(Model model) {
         model.addAttribute("articles", articleRepository.findByUsers(getUser()));
-        model.addAttribute("role", super.getUser().getRole());
         return "upload";
     }
     /***
@@ -37,7 +36,7 @@ public class FileUploadController extends app.Controller {
      * @throws IOException
      */
     @PostMapping("/upload")
-    public String uploadFile(Model model, @RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         if (file == null || StringUtils.isNullOrEmpty(file.getOriginalFilename())
                                 || StringUtils.isNullOrEmpty(file.getContentType()) || file.getBytes().length <= 0) {
             //This is how spring handles bad requests, throws exceptions.

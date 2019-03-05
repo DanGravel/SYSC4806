@@ -17,7 +17,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/upload").access("hasRole('SUBMITTER')")
+                .antMatchers("/upload/**").access("hasRole('SUBMITTER')")
                 .antMatchers("/editor/**").access("hasRole('EDITOR')")
                 .antMatchers("/submit/**").access("hasRole('SUBMITTER')")
                 .antMatchers("/reviewer/**").access("hasRole('REVIEWER')")
