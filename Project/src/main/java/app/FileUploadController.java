@@ -17,6 +17,9 @@ import java.io.IOException;
 
 @Controller
 public class FileUploadController extends app.Controller {
+
+    public String fileName;
+
     /***
      * Gets a list of files for a user
      * @param model The model to return the files
@@ -37,7 +40,9 @@ public class FileUploadController extends app.Controller {
     @PostMapping("/upload")
     public String uploadFile(Model model, @RequestParam("file") MultipartFile file) throws IOException {
         Article newArticle = new Article();
-        newArticle.setFileName(file.getOriginalFilename());
+        //have to add file name, sorry if it's too good
+        fileName = file.getOriginalFilename();
+        newArticle.setFileName(fileName);
         newArticle.setFileType(file.getContentType());
         newArticle.setData(file.getBytes());
         newArticle.addAuthorizedUser(super.getUser());
