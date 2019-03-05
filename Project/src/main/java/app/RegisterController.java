@@ -1,6 +1,5 @@
 package app;
 
-import app.models.Role;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -34,8 +33,7 @@ public class RegisterController extends app.Controller {
     public String newUser(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-        String role = Role.valueOf(user.getRole()).toString();
-        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(role).build());
+        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole().toString()).build());
         return "redirect:/login";
     }
 

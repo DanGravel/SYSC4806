@@ -20,10 +20,10 @@
             </th>
         </thead>
         <tbody>
-            <tr th:each="file: ${files}">
-                <td th:text="${file.id}"></td>
-                <td th:text="${file.fileName}"></td>
-                <td><a th:href="@{/getfile/{id}(id=${file.id})}">Download</a></td>
+            <tr th:each="article: ${articles}">
+                <td th:text="${article.id}"></td>
+                <td th:text="${article.fileName}"></td>
+                <td><a th:href="@{/getfile/{id}(id=${article.id})}">Download</a></td>
             </tr>
         </tbody>
     </table>

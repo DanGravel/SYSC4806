@@ -1,8 +1,6 @@
 package app.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class User {
@@ -15,19 +13,17 @@ public class User {
 
     private String password;
 
-    private String role;
-
-    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<File> files;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public User() {
         this(null, null, null);
     }
-    public User(String username, String password, String role){
+
+    public User(String username, String password, Role role){
         this.username = username;
         this.password = password;
         this.role = role;
-        files = new ArrayList<>();
     }
 
     public long getId() {
@@ -50,17 +46,12 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
-    }
-
-    public void addFiles(File f)
-    {
-        this.files.add(f);
     }
 
     @Override
@@ -68,7 +59,6 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User u = (User) o;
-        return u.id == this.id && u.username == this.username && u.role == this.role
-                && u.files.equals(this.files);
+        return u.id == this.id && u.username == this.username && u.role == this.role;
     }
 }

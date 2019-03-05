@@ -32,6 +32,13 @@ Project/.idea/**/libraries
 # .idea/*.iml
 # .idea/modules
 
+# Object files do not need to be committed
+Project/target/*
+
+# Specific to developer
+Project/.idea/workspace.xml
+Project/.idea/misc.xml
+
 # CMake
 cmake-build-*/
 
@@ -67,6 +74,7 @@ Project/.idea/caches/build_file_checksums.ser
 
 # Blocking all class files
 Project/target
+
 *.xml
 *.iml
 .idea/workspace.xml___jb_tmp___

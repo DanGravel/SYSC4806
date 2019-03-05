@@ -1,8 +1,6 @@
 package app;
 
-import app.models.ArticleStatus;
-import app.models.File;
-import app.models.User;
+import app.models.Article;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class FileUploadController extends app.Controller {
-
     /***
      * Gets a list of files for a user
      * @param model The model to return the files
@@ -30,11 +24,10 @@ public class FileUploadController extends app.Controller {
      */
     @GetMapping("/upload")
     public String getFileUploader(Model model) {
-        User user = super.getUser();
-        model.addAttribute("files", fileRepository.findByUser(user));
+        model.addAttribute("articles", articleRepository.findByUsers(getUser()));
+        model.addAttribute("role", super.getUser().getRole());
         return "upload";
     }
-
     /***
      * Uploads a file from form data
      * @param file The Multipart file that got uploaded
@@ -42,16 +35,15 @@ public class FileUploadController extends app.Controller {
      * @throws IOException
      */
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        File newFile = new File();
-        newFile.setFileName(file.getOriginalFilename());
-        newFile.setFileType(file.getContentType());
-        newFile.setData(file.getBytes());
-        newFile.setStatus(ArticleStatus.SUBMITTED);
-        List users = new ArrayList<User>();
-        users.add(super.getUser());
-        newFile.setUser(users);
-        fileRepository.save(newFile);
+    public String uploadFile(Model model, @RequestParam("file") MultipartFile file) throws IOException {
+        Article newArticle = new Article();
+        newArticle.setFileName(file.getName());
+        newArticle.setFileType(file.getContentType());
+        newArticle.setData(file.getBytes());
+        newArticle.addAuthorizedUser(super.getUser());
+        Article article = new Article();
+
+        articleRepository.save(newArticle);
 
         return "redirect:/upload";
     }
@@ -63,18 +55,17 @@ public class FileUploadController extends app.Controller {
      */
     @GetMapping("/getfile/{id}")
     public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
-        Optional<File> fileOptional = fileRepository.findById(id);
-        File file = fileOptional.get();
-        if (!file.getUser().contains(super.getUser())) {
+        Article article = articleRepository.findById(id).get();
+        if (!article.getAuthorizedUsers().contains(super.getUser())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(file.getFileType()));
+        headers.setContentType(MediaType.parseMediaType(article.getFileType()));
         //sets the file name
-        headers.setContentDispositionFormData(file.getFileName(), file.getFileName());
+        headers.setContentDispositionFormData(article.getFileName(), article.getFileName());
         //I admittedly have no idea what these cache control things are
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(file.getData(), headers, HttpStatus.OK);
+        ResponseEntity<byte[]> response = new ResponseEntity<>(article.getData(), headers, HttpStatus.OK);
         return response;
     }
 

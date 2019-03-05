@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<table>
+    <tbody>
+    <tr th:each="article: ${articles}">
+        <td th:text="${article.id}"></td>
+        <td th:text="${article.fileName}"></td>
+        <div th:switch="${role}">
+            <td th:case="${T(app.models.Role).SUBMITTER}" th:text="${article.getState()}"></td>
+            <td th:case="${T(app.models.Role).REVIEWER}" th:text="${article.getState()}"></td>
+            <div th:case="${T(app.models.Role).EDITOR}">
+                <td>
+                    <form method="PATCH" th:action="@{/acceptArticle}" action="#">
+                        <input type="hidden" name="articleId" th:value="${article.id}" />
+                        <input type="hidden" name="isAccepted" th:value=true />
+                        <input type="submit" value="Accept">
+                    </form>
+                </td>
+                <td>
+                    <form method="PATCH" th:action="@{/acceptArticle}" action="#">
+                        <input type="hidden" name="articleId" th:value=${article.id} />
+                        <input type="hidden" name="isAccepted" th:value=false />
+                        <input type="submit" value="Reject">
+                    </form>
+                </td>
+                <td>
+                    <form method="PATCH" th:action="@{/addReviewer}" action="#">
+                        <input type="hidden" name="articleId" th:value=${article.id} />
+                        <select name="reviewer">
+                            <option value="0">Select Reviewer</option>
+                            <option th:each="user : ${reviewers}" th:value=${user.getId()} th:text="${user.getUsername()}"></option>
+                        </select>
+                        <input type="submit" value="Add Reviewer">
+                    </form>
+                </td>
+                <td th:text="${article.getState()}"></td>
+            </div>
+        </div>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
