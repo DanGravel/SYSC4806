@@ -1,5 +1,5 @@
+const fileSizeLimit = 10000000; //10 MB in bytes
 function checkFileSize(event) {
-    var tenMegabytes = 10000000; //10 MB in bytes
     var fileElement = document.getElementById("fileLoad");
     var fileArr = fileElement.files;
 
@@ -11,7 +11,7 @@ function checkFileSize(event) {
 
     var file = fileArr[0];
 
-    if (file.size > tenMegabytes) {
+    if (file.size > fileSizeLimit) {
         alert("File too large");
         event.preventDefault();
         document.getElementById("fileUploadForm").reset();
