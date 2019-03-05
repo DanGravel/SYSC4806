@@ -56,7 +56,7 @@ public class FileUploadController extends app.Controller {
     @GetMapping("/getfile/{id}")
     public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
         Article article = articleRepository.findById(id).get();
-        if (!article.getAuthorizedUsers().contains(super.getUser())) {
+        if (!article.getUsers().contains(super.getUser())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         HttpHeaders headers = new HttpHeaders();

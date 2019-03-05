@@ -37,11 +37,11 @@ public class Article
         this.id = id;
     }
 
-    public List<User> getAuthorizedUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setAuthorizedUsers(List<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
