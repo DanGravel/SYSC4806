@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ArticleRepository extends CrudRepository<Article, Long> {
     List<Article> findByUsers(User users);
+    List<Article> findByUsersOrderByDateAsc(User users);
 }

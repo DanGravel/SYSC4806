@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviewer</title>
+</head>
+<body>
+    <script>
+        function comparator(a, b) {
+            return a.date > b.date;
+        }
+    </script>
+
+    <table>
+        <thead>
+        <th>ID</th>
+        <th>Filename</th>
+        <th>Status</th>
+        <th>Due Date</th>
+        </thead>
+        <tbody>
+        <tr th:each="article: ${articles}">
+            <td th:text="${article.id}"></td>
+            <td th:text="${article.fileName}"></td>
+            <td th:text="${article.state}"></td>
+            <td th:text="${article.date}"></td>
+            <td>
+                <form method="GET" th:action="@{/review}" action="#">
+                    <input type="hidden" name="id" th:value="${article.id}" />
+                    <input type="submit" value="Review" />
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
