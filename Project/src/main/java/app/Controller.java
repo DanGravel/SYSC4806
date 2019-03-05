@@ -18,5 +18,13 @@ public class Controller {
 
         return userRepository.findByUsername(username);
     }
+
+    public FileRepository getFileRepository() {
+        return fileRepository;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
 }
 
