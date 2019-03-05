@@ -3,8 +3,6 @@ function checkFileSize(event) {
     var fileElement = document.getElementById("fileLoad");
     var fileArr = fileElement.files;
 
-    console.log(fileArr[0]);
-
     if (!fileArr || !fileArr[0]) {
         alert("No file loaded");
         event.preventDefault();
