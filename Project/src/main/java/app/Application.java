@@ -32,12 +32,13 @@ public class Application {
             User user2 = new User("test2", encoder.encode("password"), Role.EDITOR);
             User user3 = new User("test3", encoder.encode("password"), Role.REVIEWER);
 
-            article.setFileName("FileTest1");
+            article.setFileName("FileTest1.txt");
+            article.setData("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST".getBytes());
+            article.setFileType("text/plain");
             List<User> users = new ArrayList<User>();
             users.add(user1);
             users.add(user3);
             article.setUsers(users);
-            article.setData("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST".getBytes());
 
             userRepository.save(user1);
             userRepository.save(user2);

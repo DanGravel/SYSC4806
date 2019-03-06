@@ -47,8 +47,6 @@ public class FileUploadController extends app.Controller {
         newArticle.setFileType(file.getContentType());
         newArticle.setData(file.getBytes());
         newArticle.addAuthorizedUser(super.getUser());
-        Article article = new Article();
-
         articleRepository.save(newArticle);
         return "redirect:/upload";
     }
