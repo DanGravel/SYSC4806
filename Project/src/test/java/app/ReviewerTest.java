@@ -28,6 +28,6 @@ public class ReviewerTest {
     public void testGetReviewer() throws Exception {
         mockMvc.perform(get("/reviewer"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("articles"))
+                .andExpect(model().attributeExists("articles"));
     }
 }
