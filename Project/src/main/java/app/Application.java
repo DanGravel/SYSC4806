@@ -37,7 +37,6 @@ public class Application {
             users.add(user1);
             users.add(user3);
             article.setUsers(users);
-            article.setData("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST".getBytes());
 
             userRepository.save(user1);
             userRepository.save(user2);
