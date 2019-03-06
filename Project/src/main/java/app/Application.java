@@ -31,10 +31,6 @@ public class Application {
             User user2 = new User("test2", encoder.encode("password"), Role.EDITOR);
             User user3 = new User("test3", encoder.encode("password"), Role.REVIEWER);
 
-            List<User> users = new ArrayList<User>();
-            users.add(user1);
-            users.add(user3);
-
             userRepository.save(user1);
             userRepository.save(user2);
             userRepository.save(user3);
