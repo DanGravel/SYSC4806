@@ -27,16 +27,13 @@ public class Application {
         return (args) -> {
             PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
             // save a couple of customers
-            Article article = new Article();
             User user1 = new User("test1", encoder.encode("password"), Role.SUBMITTER);
             User user2 = new User("test2", encoder.encode("password"), Role.EDITOR);
             User user3 = new User("test3", encoder.encode("password"), Role.REVIEWER);
 
-            article.setFileName("FileTest1");
             List<User> users = new ArrayList<User>();
             users.add(user1);
             users.add(user3);
-            article.setUsers(users);
 
             userRepository.save(user1);
             userRepository.save(user2);
@@ -45,8 +42,6 @@ public class Application {
             inMemoryUserDetailsManage.createUser(org.springframework.security.core.userdetails.User.withUsername(user1.getUsername()).password(user1.getPassword()).roles(user1.getRole().toString()).build());
             inMemoryUserDetailsManage.createUser(org.springframework.security.core.userdetails.User.withUsername(user2.getUsername()).password(user2.getPassword()).roles(user2.getRole().toString()).build());
             inMemoryUserDetailsManage.createUser(org.springframework.security.core.userdetails.User.withUsername(user3.getUsername()).password(user3.getPassword()).roles(user3.getRole().toString()).build());
-
-            articleRepository.save(article);
         };
     }
 }
