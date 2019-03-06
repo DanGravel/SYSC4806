@@ -14,7 +14,11 @@ The current features that have been implemented into the system are:
 - Reviewers can download the file to look over it and post a review for the file
 - The editor can use the review to accept or reject the file
 
-The project also has CI integration with Travis CI. There are unit tests written to help with the process. 
+The project also has CI integration with Travis CI. There are unit tests written to help with the process.
+
+**Next Iteration**
+
+The next iteration will focus on making styling changes, fixing bugs and adding more testing to make sure current functionality is not broken. 
 
 **DB Schema**
 
@@ -50,3 +54,6 @@ Description: Many-To-Many table between Users and Articles. Multiple users will 
 |:-----------:|:-------:|:--------:|
 | article_id  | int     | foreign  |
 | user_id     | int     | foreign  |
+
+**UML Class Diagram**
+![](Project/UML%20Images/AppUMLIteration1.png)
