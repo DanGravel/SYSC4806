@@ -29,6 +29,5 @@ public class ReviewerTest {
         mockMvc.perform(get("/reviewer"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("articles"))
-                .andReturn();
     }
 }
