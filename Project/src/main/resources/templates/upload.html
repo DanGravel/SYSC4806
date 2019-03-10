@@ -4,26 +4,34 @@
     <meta charset="UTF-8">
     <title>Upload File</title>
     <script src="/js/upload.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
-        <label>Select File to Upload (Up to 10 MB): </label><input id="fileLoad" type="file" name="file"> <br />
-        <input type="submit" value="Upload File" onclick="checkFileSize(event)">
+    <form class="d-flex justify-content-center align-items-center" id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
+        <div class="form-group">
+            <label for="fileLoad">Select File to Upload (Up to 10 MB):</label>
+            <input id="fileLoad" class="form-control-file" type="file" name="file">
+        </div>
+        <input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)">
     </form>
     <br/>
 
-    <table>
-        <thead>
-            <th>
-                <td>ID</td>
-                <td>File Name</td>
-                <td>Download</td>
-            </th>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>File Name</th>
+                <th>Reviewer</th>
+                <th>State</th>
+                <th>Download</th>
+            </tr>
         </thead>
         <tbody>
-            <tr th:each="article: ${articles}">
+            <tr scope="row" th:each="article: ${articles}">
                 <td th:text="${article.id}"></td>
                 <td th:text="${article.fileName}"></td>
+                <td th:text="${article.review}"></td>
+                <td th:text="${article.state}"></td>
                 <td><a th:href="@{/getfile/{id}(id=${article.id})}">Download</a></td>
             </tr>
         </tbody>
