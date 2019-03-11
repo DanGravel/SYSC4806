@@ -14,8 +14,6 @@ import java.util.List;
 
 @Controller
 public class EditorController extends app.Controller {
-    @Autowired
-    private ArticleRepository articleRepository;
 
     /***
      * Adds all the reviewers to the model for the dropdown menu in editor.html
