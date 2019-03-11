@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Article
@@ -52,9 +53,17 @@ public class Article
         }
     }
 
+    public void removeUser(User user)
+    {
+        users.remove(user);
+    }
+
     public User getReviewer()
     {
-        return users.stream().filter(u -> u.getRole().equals(Role.REVIEWER)).findFirst().get();
+        return users.stream()
+                .filter(u -> u.getRole().equals(Role.REVIEWER))
+                .findFirst()
+                .orElse(new User("Select a reviewer", null, null));
     }
 
     public String getFileName() {

@@ -17,13 +17,13 @@
     <tr th:each="article: ${articles}">
         <td th:text="${article.fileName}"></td>
         <td>
-            <form method="PATCH" th:action="@{/addReviewer}" action="#">
+            <form method="PATCH" th:action="@{/updateReviewer}" action="#">
                 <input type="hidden" name="articleId" th:value=${article.id} />
-                <select name="reviewer">
+                <select name="reviewer" onchange="this.form.submit()">
                     <option value="0" th:text = ${article.getReviewer().username}></option>
                     <option th:each="user : ${reviewers}" th:value=${user.id} th:text="${user.username}"></option>
+                    <option value="-1">No Reviewer</option>
                 </select>
-                <input type="submit" value="Add Reviewer">
             </form>
         </td>
         <td th:text = "${article.date}"></td>
