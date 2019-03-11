@@ -1,6 +1,7 @@
 package app;
 
 import app.models.Article;
+import app.models.ArticleState;
 import app.models.Role;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ import java.util.List;
 
 @Controller
 public class EditorController extends app.Controller {
-
+    private static final int NO_USER = 0;
+    private static final int REMOVE_USER = -1;
     /***
      * Adds all the reviewers to the model for the dropdown menu in editor.html
      * @return List<User> of all users with the Role.REVIEWER role
@@ -51,14 +53,24 @@ public class EditorController extends app.Controller {
      * @param userId The user in the drop down menu
      * @return The editor.html view reloaded
      */
-    @GetMapping("/addReviewer")
-    public String addReviewer(@RequestParam("articleId") long articleId, @RequestParam("reviewer") long userId) {
-        User callingUser = getUser();
-        User reviewingUser = userRepository.findById(userId);
-        // throws NoSuchElementException due to Optional<T> type
+    @GetMapping("/updateReviewer")
+    public String updateReviewer(@RequestParam("articleId") long articleId, @RequestParam("reviewer") long userId) {
         Article article = articleRepository.findById(articleId).get();
-        article.addReviewer(callingUser.getRole(), reviewingUser);
+        if(userId == REMOVE_USER) {
+            article.removeReviewer();
+
+        } else if(userId != NO_USER){
+            User callingUser = getUser();
+            User reviewingUser = userRepository.findById(userId);
+            if(article.getState().equals(ArticleState.IN_REVIEW.toString()))
+            {
+                article.removeReviewer();
+                article.setReview(null);
+            }
+            article.addReviewer(callingUser.getRole(), reviewingUser);
+        }
         articleRepository.save(article);
+
         return "redirect:/editor";
     }
 
