@@ -7,9 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
 
 @Controller
 public class RegisterController extends app.Controller {
@@ -27,6 +28,14 @@ public class RegisterController extends app.Controller {
     public String getRegister(Model model) {
         model.addAttribute("user", new User());
         return "register";
+    }
+
+
+    @RequestMapping("/register/user")
+    @ResponseBody
+    public Map<String, Boolean> userExists(@RequestParam(value = "username")String username) {
+        User user = userRepository.findByUsername(username);
+        return Collections.singletonMap("userExists", user != null);
     }
 
     @PostMapping("/register")
