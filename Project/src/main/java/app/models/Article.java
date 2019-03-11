@@ -1,6 +1,7 @@
 package app.models;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,11 @@ public class Article
         }
     }
 
+    public User getReviewer()
+    {
+        return users.stream().filter(u -> u.getRole().equals(Role.REVIEWER)).findFirst().get();
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -75,8 +81,12 @@ public class Article
         this.data = data;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+
+        String pattern = "yyyy-MM-dd hh:mm a"; //e.g 2019-03-11 12:04 AM
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        return simpleDateFormat.format(this.date);
     }
 
     public void setDate(Date date) {
