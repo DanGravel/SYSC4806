@@ -1,5 +1,6 @@
 package app;
 
+import app.models.Role;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -47,10 +48,18 @@ public class RegisterController extends app.Controller {
     }
 
     @GetMapping("/")
-    public String defaultPage(Model model) {
+    public String defaultPage() {
         User user = getUser();
-        model.addAttribute("user", user);
-        return "default";
+        switch(user.getRole()) {
+            case EDITOR:
+                return "redirect:/editor";
+            case REVIEWER:
+                return "redirect:/reviewer";
+            case SUBMITTER:
+                return "redirect:/upload";
+            default:
+                return "default";
+        }
     }
 
     @GetMapping("/login")

@@ -2,19 +2,10 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home Page</title>
 </head>
 <body>
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-
-    <h2>User Info</h2>
-    <table>
-        <tr th:each="user : ${user}">
-            <td th:text="${user.username}"></td>
-            <td th:text="${user.password}"></td>
-            <td th:text="${user.role.toString()}"></td>
-        </tr>
-    </table>
+    <h1>Hello! Your account seems to be bugged - Please register again!</h1>
 
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out"/>
