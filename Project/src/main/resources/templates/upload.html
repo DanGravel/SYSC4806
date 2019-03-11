@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="header.html :: header"></header>
+    <header th:insert="header.html :: header"></header>
     <form class="d-flex justify-content-center align-items-center" id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
         <div class="form-group">
             <label for="fileLoad">Select File to Upload (Up to 10 MB):</label>
