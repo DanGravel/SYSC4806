@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
@@ -35,6 +36,7 @@ public class Application {
             article.setFileName("FileTest1.txt");
             article.setData("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST".getBytes());
             article.setFileType("text/plain");
+            article.setDate(new Date());
             List<User> users = new ArrayList<User>();
             users.add(user1);
             users.add(user3);

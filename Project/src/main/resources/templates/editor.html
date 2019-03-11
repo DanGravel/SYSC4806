@@ -2,26 +2,49 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>All submitted articles</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>File Name</th>
-            <th>Article Status</th>
-            <th>Reviewer</th>
-            <th>Due Date</th>
-        </tr>
-        <tbody>
-            <tr th:each="file: ${files}">
-                <td th:text="${file.id}"></td>
-                <td th:text="${file.fileName}"></td>
-                <td th:text="${file.state}"></td>
-                <td th:text="${file.users[1].username}"></td>
-                <td th:text="${file.date}"></td>
-            </tr>
-        </tbody>
-    </table>
+<table>
+    <thead>
+        <th>File Name</th>
+        <th>Reviewer</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Accept/Deny</th>
+    </thead>
+    <tbody>
+    <tr th:each="article: ${articles}">
+        <td th:text="${article.fileName}"></td>
+        <td>
+            <form method="PATCH" th:action="@{/addReviewer}" action="#">
+                <input type="hidden" name="articleId" th:value=${article.id} />
+                <select name="reviewer">
+                    <option value="0" th:text = ${article.getReviewer().username}></option>
+                    <option th:each="user : ${reviewers}" th:value=${user.id} th:text="${user.username}"></option>
+                </select>
+                <input type="submit" value="Add Reviewer">
+            </form>
+        </td>
+        <td th:text = "${article.date}"></td>
+        <td th:text="${article.state}"></td>
+        <td>
+            <form method="PATCH" th:action="@{/acceptArticle}" action="#">
+                <input type="hidden" name="articleId" th:value="${article.id}" />
+                <input type="hidden" name="isAccepted" th:value=true />
+                <input type="submit" value="Accept">
+            </form>
+        </td>
+        <td>
+            <form method="PATCH" th:action="@{/acceptArticle}" action="#">
+                <input type="hidden" name="articleId" th:value=${article.id} />
+                <input type="hidden" name="isAccepted" th:value=false />
+                <input type="submit" value="Reject">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
