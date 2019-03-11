@@ -57,14 +57,15 @@ public class EditorController extends app.Controller {
     public String updateReviewer(@RequestParam("articleId") long articleId, @RequestParam("reviewer") long userId) {
         Article article = articleRepository.findById(articleId).get();
         if(userId == REMOVE_USER) {
-            article.removeUser(article.getReviewer());
+            article.removeReviewer();
 
         } else if(userId != NO_USER){
             User callingUser = getUser();
             User reviewingUser = userRepository.findById(userId);
             if(article.getState().equals(ArticleState.IN_REVIEW.toString()))
             {
-                article.removeUser(article.getReviewer());
+                article.removeReviewer();
+                article.setReview(null);
             }
             article.addReviewer(callingUser.getRole(), reviewingUser);
         }

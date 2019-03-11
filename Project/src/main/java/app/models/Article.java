@@ -61,9 +61,14 @@ public class Article
     public User getReviewer()
     {
         return users.stream()
-                .filter(u -> u.getRole().equals(Role.REVIEWER))
-                .findFirst()
-                .orElse(new User("Select a reviewer", null, null));
+            .filter(u -> u.getRole().equals(Role.REVIEWER))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public void removeReviewer() {
+        removeUser(this.getReviewer());
+        state = ArticleState.SUBMITTED;
     }
 
     public String getFileName() {
@@ -113,6 +118,8 @@ public class Article
     public void setReview(String review) {
         this.review = review;
     }
+
+    public boolean hasReview() { return this.review != null;}
 
     public void addReviewer(Role caller, User user) {
         if (user == null) {

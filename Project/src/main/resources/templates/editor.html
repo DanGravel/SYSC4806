@@ -20,7 +20,11 @@
             <form method="PATCH" th:action="@{/updateReviewer}" action="#">
                 <input type="hidden" name="articleId" th:value=${article.id} />
                 <select name="reviewer" onchange="this.form.submit()">
-                    <option value="0" th:text = ${article.getReviewer().username}></option>
+                    <option value="0"
+                        th:text = "${article.getReviewer() != null} ?
+                            ${article.getReviewer().username} :
+                            'Select a reviewer'">
+                    </option>
                     <option th:each="user : ${reviewers}" th:value=${user.id} th:text="${user.username}"></option>
                     <option value="-1">No Reviewer</option>
                 </select>
