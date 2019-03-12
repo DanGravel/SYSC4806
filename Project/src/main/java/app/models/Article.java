@@ -1,9 +1,11 @@
 package app.models;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Article
@@ -51,6 +53,24 @@ public class Article
         }
     }
 
+    public void removeUser(User user)
+    {
+        users.remove(user);
+    }
+
+    public User getReviewer()
+    {
+        return users.stream()
+            .filter(u -> u.getRole().equals(Role.REVIEWER))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public void removeReviewer() {
+        removeUser(this.getReviewer());
+        state = ArticleState.SUBMITTED;
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -75,8 +95,12 @@ public class Article
         this.data = data;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+
+        String pattern = "yyyy-MM-dd hh:mm a"; //e.g 2019-03-11 12:04 AM
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        return simpleDateFormat.format(this.date);
     }
 
     public void setDate(Date date) {
@@ -94,6 +118,8 @@ public class Article
     public void setReview(String review) {
         this.review = review;
     }
+
+    public boolean hasReview() { return this.review != null;}
 
     public void addReviewer(Role caller, User user) {
         if (user == null) {
