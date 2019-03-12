@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload File</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
     <script src="/js/upload.js"></script>
     <link rel="stylesheet" href="/css/upload.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
+    <div class="alert alert-danger alert-dismissable">
+        <button id="close" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span id="errorMsg"></span>
+        </div>
+    </div>
+
     <div class="container">
         <form class="d-flex justify-content-center align-items-center" id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
             <br/>

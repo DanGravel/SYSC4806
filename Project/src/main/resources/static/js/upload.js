@@ -4,7 +4,7 @@ function checkFileSize(event) {
     var fileArr = fileElement.files;
 
     if (!fileArr || !fileArr[0]) {
-        $('#alert').removeClass("hidden");
+        alertUpload("ERROR: No File Selected")
         event.preventDefault();
         return;
     }
@@ -12,12 +12,24 @@ function checkFileSize(event) {
     var file = fileArr[0];
 
     if (file.size > fileSizeLimit) {
-        alert("File too large");
+        alertUpload("ERROR: File Too Large");
+        event.preventDefault();
+        document.getElementById("fileUploadForm").reset();
+        return;
+    } else if (file.size <= 0) {
+        alertUpload("ERROR: File Contains no Data");
         event.preventDefault();
         document.getElementById("fileUploadForm").reset();
         return;
     }
+
 }
+
+function alertUpload(errorMsg) {
+    document.getElementById("errorMsg").innerText = errorMsg;
+    $('.alert').show();
+}
+
 
 $(function() {
 
@@ -44,5 +56,9 @@ $(function() {
 
         });
     });
+
+    $('#close').click(function () {
+        $('.alert').hide();
+    })
 
 });
