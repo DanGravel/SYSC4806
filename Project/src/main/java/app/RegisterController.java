@@ -1,5 +1,6 @@
 package app;
 
+import app.models.Role;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -7,9 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
 
 @Controller
 public class RegisterController extends app.Controller {
@@ -29,6 +31,14 @@ public class RegisterController extends app.Controller {
         return "register";
     }
 
+
+    @RequestMapping("/register/user")
+    @ResponseBody
+    public Map<String, Boolean> userExists(@RequestParam(value = "username")String username) {
+        User user = userRepository.findByUsername(username);
+        return Collections.singletonMap("userExists", user != null);
+    }
+
     @PostMapping("/register")
     public String newUser(@ModelAttribute User user){
         user.setPassword(encoder.encode(user.getPassword()));
@@ -38,10 +48,18 @@ public class RegisterController extends app.Controller {
     }
 
     @GetMapping("/")
-    public String defaultPage(Model model) {
+    public String defaultPage() throws Exception {
         User user = getUser();
-        model.addAttribute("user", user);
-        return "default";
+        switch(user.getRole()) {
+            case EDITOR:
+                return "redirect:/editor";
+            case REVIEWER:
+                return "redirect:/reviewer";
+            case SUBMITTER:
+                return "redirect:/upload";
+            default:
+                throw new Exception("Invalid Role");
+        }
     }
 
     @GetMapping("/login")
