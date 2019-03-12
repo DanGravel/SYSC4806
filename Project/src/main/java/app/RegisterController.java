@@ -48,7 +48,7 @@ public class RegisterController extends app.Controller {
     }
 
     @GetMapping("/")
-    public String defaultPage() {
+    public String defaultPage() throws Exception {
         User user = getUser();
         switch(user.getRole()) {
             case EDITOR:
@@ -58,7 +58,7 @@ public class RegisterController extends app.Controller {
             case SUBMITTER:
                 return "redirect:/upload";
             default:
-                return "default";
+                throw new Exception("Invalid Role");
         }
     }
 
