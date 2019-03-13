@@ -1,5 +1,7 @@
 li {
-    display: inline;
+    padding-left: 5px;
+    padding-top: 5px;
+    float: left;
 }
 
 ul {

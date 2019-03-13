@@ -16,23 +16,27 @@
         </div>
     </div>
 
+
     <div class="container">
-        <form class="d-flex justify-content-center align-items-center" id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
-            <br/>
+        <div class="d-flex justify-content-center align-items-center" >
+        <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
              <ul>
                  <li>
                     <div class="input-group">
                         <label class="input-group-btn">
-                                <span class="btn btn-light">
+                                <span class="btn btn-secondary">
                                     Browse&hellip; <input id="fileLoad" type="file" name="file" style="display: none;" multiple>
                                 </span>
                         </label>
-                        <input type="text"  placeholder="Select file to upload" class="form-control" readonly>
+                        <input type="text"  placeholder="Select File to Upload" class="form-control" readonly>
                     </div>
                  </li>
-                 <li><input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)"></li>
+                 <li>
+                     <input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)">
+                 </li>
              </ul>
         </form>
+        </div>
         <br/>
 
         <table class="table">
