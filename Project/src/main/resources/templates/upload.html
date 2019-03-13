@@ -3,40 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload File</title>
+    <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
     <script src="/js/upload.js"></script>
+    <link rel="stylesheet" href="/css/upload.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
-    <form class="d-flex justify-content-center align-items-center" id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
-        <div class="form-group">
-            <label for="fileLoad">Select File to Upload (Up to 10 MB):</label>
-            <input id="fileLoad" class="form-control-file" type="file" name="file">
+    <div class="alert alert-danger alert-dismissable">
+        <button id="close" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span id="errorMsg"></span>
         </div>
-        <input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)">
-    </form>
-    <br/>
+    </div>
 
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>File Name</th>
-                <th>Reviewer</th>
-                <th>State</th>
-                <th>Download</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr scope="row" th:each="article: ${articles}">
-                <td th:text="${article.id}"></td>
-                <td th:text="${article.fileName}"></td>
-                <td th:text="${article.review}"></td>
-                <td th:text="${article.state}"></td>
-                <td><a th:href="@{/getfile/{id}(id=${article.id})}">Download</a></td>
-            </tr>
-        </tbody>
-    </table>
 
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center" >
+        <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
+             <ul>
+                 <li>
+                    <div class="input-group">
+                        <label class="input-group-btn">
+                                <span class="btn btn-secondary">
+                                    Browse&hellip; <input id="fileLoad" type="file" name="file" style="display: none;" multiple>
+                                </span>
+                        </label>
+                        <input type="text"  placeholder="Select File to Upload" class="form-control" readonly>
+                    </div>
+                 </li>
+                 <li>
+                     <input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)">
+                 </li>
+             </ul>
+        </form>
+        </div>
+        <br/>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>File Name</th>
+                    <th>Upload Date</th>
+                    <th>Reviewer</th>
+                    <th>State</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr scope="row" th:each="article: ${articles}">
+                    <td th:text="${article.fileName}"></td>
+                    <td th:text="${article.date}"></td>
+                    <td th:text="${article.review}"></td>
+                    <td th:text="${article.state}"></td>
+                    <td><a th:href="@{/getfile/{id}(id=${article.id})}">Download</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

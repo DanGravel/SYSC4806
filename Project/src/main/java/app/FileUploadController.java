@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Controller
 public class FileUploadController extends app.Controller {
@@ -47,6 +48,7 @@ public class FileUploadController extends app.Controller {
         newArticle.setFileType(file.getContentType());
         newArticle.setData(file.getBytes());
         newArticle.addAuthorizedUser(super.getUser());
+        newArticle.setDate(new Date());
         articleRepository.save(newArticle);
         return "redirect:/upload";
     }

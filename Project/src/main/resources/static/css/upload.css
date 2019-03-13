@@ -1,0 +1,13 @@
+li {
+    padding-left: 5px;
+    padding-top: 5px;
+    float: left;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.alert {
+    display: none;
+}
