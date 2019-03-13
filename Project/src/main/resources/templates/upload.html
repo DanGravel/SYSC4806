@@ -7,6 +7,7 @@
     <script src="/js/upload.js"></script>
     <link rel="stylesheet" href="/css/upload.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
@@ -46,7 +47,7 @@
                     <th>Upload Date</th>
                     <th>Reviewer</th>
                     <th>State</th>
-                    <th>Download</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +56,12 @@
                     <td th:text="${article.date}"></td>
                     <td th:text="${article.review}"></td>
                     <td th:text="${article.state}"></td>
-                    <td><a th:href="@{/getfile/{id}(id=${article.id})}">Download</a></td>
+                    <td>
+                        <a th:href="@{/getfile/{id}(id=${article.id})}">Download</a> &nbsp;
+                        <button type="button" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
