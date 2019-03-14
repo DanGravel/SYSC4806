@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 public class Article
@@ -150,5 +149,9 @@ public class Article
         else {  // review == null
             throw new IllegalStateException("setAccepted was called on an article with no review");
         }
+    }
+
+    public boolean isAccepted() {
+        return (state == ArticleState.ACCEPTED);
     }
 }

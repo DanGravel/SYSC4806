@@ -18,7 +18,7 @@
             <th>Reviewer</th>
             <th>Date</th>
             <th>Status</th>
-            <th>Accept/Deny</th>
+            <th>Accept/Reject</th>
         </thead>
         <tbody>
             <tr th:each="article: ${articles}">
@@ -42,12 +42,8 @@
                 <td>
                     <form method="PATCH" th:action="@{/acceptArticle}" action="#">
                         <input type="hidden" name="articleId" th:value="${article.id}" />
-                        <input type="hidden" name="isAccepted" th:value=true />
-                        <input type="submit" value="Accept">
-                    </form> <form method="PATCH" th:action="@{/acceptArticle}" action="#">
-                        <input type="hidden" name="articleId" th:value="${article.id}" />
-                        <input type="hidden" name="isAccepted" th:value=false />
-                        <input type="submit" value="Deny">
+                        <input type="hidden" name="isAccepted" th:value="!${article.isAccepted()}" />
+                        <input type="submit" th:value="${article.isAccepted()} ? Reject : Accept">
                     </form>
                 </td>
             </tr>
