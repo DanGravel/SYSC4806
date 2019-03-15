@@ -8,7 +8,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="/js/editorTableSort.js"></script>
+    <script src="/js/editor.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -45,7 +45,7 @@
                 <td>
                     <form method="PATCH" th:action="@{/updateDueDate}" action="#" id="date_form">
                         <input type="hidden" name="articleId" th:value=${article.id} />
-                        <input type="text" class="form-control datetimepicker-input" th:id="datetimepicker + ${article.id}" data-toggle="datetimepicker" th:attr="data-target='#datetimepicker' + ${article.id}"/>
+                        <input type="text" name="date" class="form-control datetimepicker-input" th:id="datetimepicker + ${article.id}" data-toggle="datetimepicker" th:attr="data-target='#datetimepicker' + ${article.id}"/>
                     </form>
                 </td>
                 <td th:text="${article.state}"></td>

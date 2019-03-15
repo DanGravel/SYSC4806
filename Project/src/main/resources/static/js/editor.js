@@ -6,8 +6,7 @@ $(document).ready( function () {
 
 
 $(function() {
-    $("[id*='datetimepicker']").datetimepicker();
-    $("[id*='datetimepicker']").change(function (e) {
+    $("[id*='datetimepicker']").datetimepicker({useCurrent : false, sideBySide : true, keepOpen : true}).on("change.datetimepicker",(function (e) {
         $('#date_form').submit();
-    });
+    }));
 });
