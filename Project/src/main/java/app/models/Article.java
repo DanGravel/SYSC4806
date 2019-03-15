@@ -19,8 +19,8 @@ public class Article
     private String fileType;
     private String review;
     private ArticleState state;
-
     private Date date;
+    private Date reviewDueDate;
 
     @Lob
     private byte[] data;
@@ -104,6 +104,18 @@ public class Article
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getReviewDueDate() {
+        if(this.reviewDueDate == null) return null;
+        String pattern = "yyyy-MM-dd hh:mm a"; //e.g 2019-03-11 12:04 AM
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        return simpleDateFormat.format(this.reviewDueDate);
+    }
+
+    public void setReviewDueDate(Date date) {
+        this.reviewDueDate = date;
     }
 
     public String getState() {

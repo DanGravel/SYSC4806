@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+    <script src="webjars/momentjs/2.22.2/moment.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
@@ -37,7 +39,9 @@
                         </select>
                     </form>
                 </td>
-                <td th:text = "${article.date}"></td>
+                <td>
+                        <!-- Review Due date picker TODO -->
+                </td>
                 <td th:text="${article.state}"></td>
                 <td>
                     <form method="PATCH" th:action="@{/acceptArticle}" action="#">
