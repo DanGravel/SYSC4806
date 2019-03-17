@@ -108,10 +108,7 @@ public class Article
 
     public String getReviewDueDate() {
         if(this.reviewDueDate == null) return null;
-        String pattern = "yyyy-MM-dd hh:mm a"; //e.g 2019-03-11 12:04 AM
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-        return simpleDateFormat.format(this.reviewDueDate);
+        return new SimpleDateFormat("EEEE, MMMM d yyyy, h:m a").format(this.reviewDueDate);
     }
 
     public void setReviewDueDate(Date date) {

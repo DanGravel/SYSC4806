@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -82,11 +83,16 @@ public class EditorController extends app.Controller {
      * @return The editor.html view reloaded
      */
     @GetMapping("/updateDueDate")
-    public String updateDueDate(@RequestParam("articleId") long articleId, @RequestParam("date") Date date) {
+    public String updateDueDate(@RequestParam("articleId") long articleId, @RequestParam("date") String date) {
         Article article = articleRepository.findById(articleId).get();
-        article.setReviewDueDate(date);
-        articleRepository.save(article);
-        return "redirect:/editor";
+        try {
+            Date date1= new SimpleDateFormat("EEEE, MMMM d yyyy, h:m a").parse(date);
+            article.setReviewDueDate(date1);
+            articleRepository.save(article);
+            return "redirect:/editor";
+        } catch (Exception exception) {
+            return "redirect:/editor";
+        }
     }
 
     /***

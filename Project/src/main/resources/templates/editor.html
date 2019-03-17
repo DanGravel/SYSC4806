@@ -31,13 +31,13 @@
                 <td>
                     <form method="PATCH" th:action="@{/updateReviewer}" action="#">
                         <input type="hidden" name="articleId" th:value=${article.id} />
-                        <select name="reviewer" onchange="this.form.submit()">
+                        <select class="form-control" name="reviewer" onchange="this.form.submit()">
                             <option value="0"
                                 th:text = "${article.getReviewer() != null} ?
                                     ${article.getReviewer().username} :
                                     'Select a reviewer'">
                             </option>
-                            <option th:each="user : ${reviewers}" th:value=${user.id} th:text="${user.username}"></option>
+                            <option  th:each="user : ${reviewers}" th:value=${user.id} th:text="${user.username}"></option>
                             <option value="-1">No Reviewer</option>
                         </select>
                     </form>
@@ -45,7 +45,15 @@
                 <td>
                     <form method="PATCH" th:action="@{/updateDueDate}" action="#" id="date_form">
                         <input type="hidden" name="articleId" th:value=${article.id} />
-                        <input type="text" name="date" class="form-control datetimepicker-input" th:id="datetimepicker + ${article.id}" data-toggle="datetimepicker" th:attr="data-target='#datetimepicker' + ${article.id}"/>
+                        <div class="input-group mb-3">
+                            <input type="text" name="date" class="form-control datetimepicker-input" th:id="datetimepicker + ${article.id}" data-toggle="datetimepicker" th:attr="data-target='#datetimepicker' + ${article.id}"
+                                th:placeholder="${article.getReviewDueDate() != null} ? ${article.getReviewDueDate()} : ''"  />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="fas fa-check-square"></i>
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </td>
                 <td th:text="${article.state}"></td>
@@ -53,7 +61,8 @@
                     <form method="PATCH" th:action="@{/acceptArticle}" action="#">
                         <input type="hidden" name="articleId" th:value="${article.id}" />
                         <input type="hidden" name="isAccepted" th:value="!${article.isAccepted()}" />
-                        <input type="submit" th:value="${article.isAccepted()} ? Reject : Accept">
+                        <button th:if="${article.isAccepted()}" type="submit" class="btn btn-danger">Reject</button>
+                        <button th:unless="${article.isAccepted()}" type="submit" class="btn btn-success" th:disabled="${!article.hasReview()}" th:text="${article.hasReview()} ? 'Accept' : 'Waiting on Review'"></button>
                     </form>
                 </td>
             </tr>
