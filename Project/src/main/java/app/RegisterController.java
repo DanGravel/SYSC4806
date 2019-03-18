@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.Map;
 
@@ -39,13 +41,22 @@ public class RegisterController extends app.Controller {
     }
 
     @PostMapping("/register")
-    public String newUser(@ModelAttribute User user){
+    public String newUser(@ModelAttribute User user,  HttpServletRequest request){
         if ( userRepository.findByUsername(user.getUsername()) != null) {
             throw new IllegalStateException("User already exists!");
         }
+
+        String unencryptedPass = user.getPassword();
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole().toString()).build());
+
+        try {
+            request.login(user.getUsername(), unencryptedPass);
+        } catch (ServletException e) {
+            return "redirect:/register";
+        }
+
         return "redirect:/login";
     }
 
