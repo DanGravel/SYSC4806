@@ -46,6 +46,7 @@ public class EditorController extends app.Controller {
 
         model.addAttribute("articles", articles);
         model.addAttribute("role", getUser().getRole());
+        model.addAttribute("currDate", new Date());
         return "editor";
     }
 

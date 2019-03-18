@@ -21,6 +21,7 @@ public class Article
     private ArticleState state;
     private Date date;
     private Date reviewDueDate;
+    private Date reviewSubmissionDate;
 
     @Lob
     private byte[] data;
@@ -52,13 +53,11 @@ public class Article
         }
     }
 
-    public void removeUser(User user)
-    {
+    public void removeUser(User user) {
         users.remove(user);
     }
 
-    public User getReviewer()
-    {
+    public User getReviewer() {
         return users.stream()
             .filter(u -> u.getRole().equals(Role.REVIEWER))
             .findFirst()
@@ -95,10 +94,8 @@ public class Article
     }
 
     public String getDate() {
-
         String pattern = "yyyy-MM-dd hh:mm a"; //e.g 2019-03-11 12:04 AM
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
         return simpleDateFormat.format(this.date);
     }
 
@@ -106,7 +103,18 @@ public class Article
         this.date = date;
     }
 
-    public String getReviewDueDate() {
+    public Date getReviewDueDate() {
+        return this.reviewDueDate;
+    }
+    public void setReviewSubmissionDate(Date date) {
+        this.reviewSubmissionDate = date;
+    }
+
+    public Date getReviewSubmissionDate() {
+        return this.reviewDueDate;
+    }
+
+    public String getFormattedDueDate() {
         if(this.reviewDueDate == null) return null;
         return new SimpleDateFormat("EEEE, MMMM d yyyy, h:m a").format(this.reviewDueDate);
     }
@@ -162,5 +170,19 @@ public class Article
 
     public boolean isAccepted() {
         return (state == ArticleState.ACCEPTED);
+    }
+
+    /**
+     * Checks to see if a review has been submitted on time
+     * @return boolean true if review has been submitted on time
+     */
+    public boolean isOnTime() {
+        if(reviewDueDate != null) {
+            if(reviewSubmissionDate != null) {
+                return reviewDueDate.after(reviewSubmissionDate); //Checks review date against submission date
+            }
+            return reviewDueDate.after(new Date()); //Checks review date against current date
+        }
+        return true; //On time if you dont have a due date
     }
 }
