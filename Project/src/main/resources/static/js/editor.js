@@ -9,7 +9,7 @@ $(document).ready( function () {
             showClose: true,
             showToday: false
         },
-        format: "dddd, MMMM D YYYY, h:mm A",
+        format: "dddd, MMMM D, YYYY h:mm A",
         icons: {
             time: 'fas fa-clock',
             date: 'fas fa-calendar',
