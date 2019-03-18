@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script src="webjars/momentjs/2.22.2/moment.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-    <script src="/js/editorTableSort.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="/js/editor.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
@@ -26,24 +31,38 @@
                 <td>
                     <form method="PATCH" th:action="@{/updateReviewer}" action="#">
                         <input type="hidden" name="articleId" th:value=${article.id} />
-                        <select name="reviewer" onchange="this.form.submit()">
+                        <select class="form-control" name="reviewer" onchange="this.form.submit()">
                             <option value="0"
                                 th:text = "${article.getReviewer() != null} ?
                                     ${article.getReviewer().username} :
                                     'Select a reviewer'">
                             </option>
-                            <option th:each="user : ${reviewers}" th:value=${user.id} th:text="${user.username}"></option>
+                            <option  th:each="user : ${reviewers}" th:value=${user.id} th:text="${user.username}"></option>
                             <option value="-1">No Reviewer</option>
                         </select>
                     </form>
                 </td>
-                <td th:text = "${article.date}"></td>
+                <td>
+                    <form method="PATCH" th:action="@{/updateDueDate}" action="#" id="date_form">
+                        <input type="hidden" name="articleId" th:value=${article.id} />
+                        <div class="input-group mb-3">
+                            <input type="text" name="date" class="form-control datetimepicker-input" th:id="datetimepicker + ${article.id}" data-toggle="datetimepicker" th:attr="data-target='#datetimepicker' + ${article.id}"
+                                th:placeholder="${article.getReviewDueDate() != null} ? ${article.getReviewDueDate()} : ''"  />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="fas fa-check-square"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
                 <td th:text="${article.state}"></td>
                 <td>
                     <form method="PATCH" th:action="@{/acceptArticle}" action="#">
                         <input type="hidden" name="articleId" th:value="${article.id}" />
                         <input type="hidden" name="isAccepted" th:value="!${article.isAccepted()}" />
-                        <input type="submit" th:value="${article.isAccepted()} ? Reject : Accept">
+                        <button th:if="${article.isAccepted()}" type="submit" class="btn btn-danger">Reject</button>
+                        <button th:unless="${article.isAccepted()}" type="submit" class="btn btn-success" th:disabled="${!article.hasReview()}" th:text="${article.hasReview()} ? 'Accept' : 'Waiting on Review'"></button>
                     </form>
                 </td>
             </tr>
