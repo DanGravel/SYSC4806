@@ -78,7 +78,7 @@ public class FileUploadController extends app.Controller {
      */
     @DeleteMapping("/upload/{id}")
     public ResponseEntity<Void> deleteFileById(@PathVariable(value = "id") Long id) {
-        if (id <= 0 || !articleRepository.existsById(id)) throw new BadFileException();
+        if (!articleRepository.existsById(id)) throw new BadFileException();
         articleRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

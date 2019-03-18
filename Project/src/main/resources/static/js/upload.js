@@ -45,8 +45,6 @@ function deleteFile(id) {
                 $("#successAlert").show();
             }
         });
-    } else {
-        return;
     }
 }
 
