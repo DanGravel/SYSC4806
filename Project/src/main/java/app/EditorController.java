@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -75,6 +77,25 @@ public class EditorController extends app.Controller {
     }
 
     /***
+     * Updates a review due date for a specified article
+     * @param articleId The article in the table row clicked on
+     * @param date The date chosen by the datepicker
+     * @return The editor.html view reloaded
+     */
+    @GetMapping("/updateDueDate")
+    public String updateDueDate(@RequestParam("articleId") long articleId, @RequestParam("date") String date) {
+        Article article = articleRepository.findById(articleId).get();
+        try {
+            Date date1= new SimpleDateFormat("EEEE, MMMM d yyyy, h:m a").parse(date);
+            article.setReviewDueDate(date1);
+            articleRepository.save(article);
+            return "redirect:/editor";
+        } catch (Exception exception) {
+            return "redirect:/editor";
+        }
+    }
+
+    /***
      * Accepts or rejects the article given by articleId and isAccepted
      * @param articleId The article in the table row clicked on
      * @param isAccepted True if accepted was clicked false if reject was clicked
@@ -88,4 +109,6 @@ public class EditorController extends app.Controller {
         articleRepository.save(article);
         return "redirect:/editor";
     }
+
+
 }
