@@ -28,7 +28,9 @@
         </thead>
         <tbody>
             <tr th:each="article: ${articles}" th:style="${article.isOnTime() ? '' : 'background-color: #FF6961'}">
-                <td th:text="${article.fileName}"></td>
+                <td>
+                    <a th:href="@{/getfile/{id}(id=${article.id})}" th:text="${article.fileName}"></a>
+                </td>
                 <td>
                     <form method="PATCH" th:action="@{/updateReviewer}" action="#">
                         <input type="hidden" name="articleId" th:value=${article.id} />
