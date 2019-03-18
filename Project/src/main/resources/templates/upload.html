@@ -58,7 +58,7 @@
                     <td th:text="${article.state}"></td>
                     <td>
                         <a th:href="@{/getfile/{id}(id=${article.id})}">Download</a> &nbsp;
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" th:onclick="'deleteFile(\'' + ${article.id} + '\');'">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>

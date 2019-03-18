@@ -9,10 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -73,5 +70,13 @@ public class FileUploadController extends app.Controller {
         ResponseEntity<byte[]> response = new ResponseEntity<>(article.getData(), headers, HttpStatus.OK);
         return response;
     }
+
+    @DeleteMapping("/upload/{id}")
+    public ResponseEntity<Void> deleteFileById(@PathVariable(value = "id") Long id) {
+        if (id <= 0 || !articleRepository.existsById(id)) throw new BadFileException();
+        articleRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

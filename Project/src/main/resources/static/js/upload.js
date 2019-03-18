@@ -30,6 +30,22 @@ function alertUpload(errorMsg) {
     $('.alert').show();
 }
 
+function deleteFile(id) {
+    $.ajax({
+        url: "/upload/" + id,
+        type: "DELETE",
+        contentType: "application/json",
+        headers: {
+            'X-CSRF-TOKEN': $('[name="_csrf"]').attr('value')
+        },
+        success: function () {
+            location.reload();
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
+}
 
 $(function() {
 

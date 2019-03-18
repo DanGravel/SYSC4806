@@ -13,15 +13,15 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+
 
     //Temporary test data
     @Bean
