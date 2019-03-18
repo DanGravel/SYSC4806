@@ -41,6 +41,9 @@ public class RegisterController extends app.Controller {
 
     @PostMapping("/register")
     public String newUser(@ModelAttribute User user){
+        if ( inMemoryUserDetailsManager.loadUserByUsername(user.getUsername()) != null) {
+            throw new IllegalStateException("User already exists!");
+        }
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole().toString()).build());
