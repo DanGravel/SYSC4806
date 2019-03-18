@@ -1,6 +1,5 @@
 package app;
 
-import app.models.Role;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -41,7 +40,7 @@ public class RegisterController extends app.Controller {
 
     @PostMapping("/register")
     public String newUser(@ModelAttribute User user){
-        if ( inMemoryUserDetailsManager.loadUserByUsername(user.getUsername()) != null) {
+        if ( userRepository.findByUsername(user.getUsername()) != null) {
             throw new IllegalStateException("User already exists!");
         }
         user.setPassword(encoder.encode(user.getPassword()));
