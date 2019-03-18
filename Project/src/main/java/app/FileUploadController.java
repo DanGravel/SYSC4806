@@ -71,12 +71,15 @@ public class FileUploadController extends app.Controller {
         return response;
     }
 
+    /**
+     * Deletes an article from the article repository
+     * @param id The id of the article to be deleted
+     * @return
+     */
     @DeleteMapping("/upload/{id}")
     public ResponseEntity<Void> deleteFileById(@PathVariable(value = "id") Long id) {
         if (id <= 0 || !articleRepository.existsById(id)) throw new BadFileException();
         articleRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

@@ -13,7 +13,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-
     //Temporary test data
     @Bean
     public CommandLineRunner demo(ArticleRepository articleRepository, UserRepository userRepository, InMemoryUserDetailsManager inMemoryUserDetailsManage) {

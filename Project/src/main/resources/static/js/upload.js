@@ -31,20 +31,23 @@ function alertUpload(errorMsg) {
 }
 
 function deleteFile(id) {
-    $.ajax({
-        url: "/upload/" + id,
-        type: "DELETE",
-        contentType: "application/json",
-        headers: {
-            'X-CSRF-TOKEN': $('[name="_csrf"]').attr('value')
-        },
-        success: function () {
-            location.reload();
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    });
+    let isConfirmed = confirm("Are you sure you would like to delete this file?");
+    if (isConfirmed) {
+        $.ajax({
+            url: "/upload/" + id,
+            type: "DELETE",
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': $('[name="_csrf"]').attr('value')
+            },
+            success: function () {
+                $("#article" + id).remove();
+                $("#successAlert").show();
+            }
+        });
+    } else {
+        return;
+    }
 }
 
 $(function() {
@@ -71,7 +74,7 @@ $(function() {
 
     });
 
-    $('#close').click(function () {
+    $('.close').click(function () {
         $('.alert').hide();
     })
 
