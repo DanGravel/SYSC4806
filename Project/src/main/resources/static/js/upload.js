@@ -27,7 +27,7 @@ function checkFileSize(event) {
 
 function alertUpload(errorMsg) {
     document.getElementById("errorMsg").innerText = errorMsg;
-    $('.alert').show();
+    $("#errorAlert").show();
 }
 
 function deleteFile(id) {
@@ -50,13 +50,14 @@ function deleteFile(id) {
 
 $(function() {
 
-    $('.custom-file-input').on('change', function() {
+    $(".custom-file-input").on("change", function() {
         if (!this.files || !this.files[0]) {
+            alertUpload("ERROR: No File Selected")
             return;
         }
 
         let fileName = this.files[0].name;
-        $(this).siblings('.custom-file-label').addClass("selected").html(fileName);
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
     $('.close').click(function () {

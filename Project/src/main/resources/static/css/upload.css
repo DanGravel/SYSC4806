@@ -11,3 +11,8 @@ ul {
 .alert {
     display: none;
 }
+
+.custom-file-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
