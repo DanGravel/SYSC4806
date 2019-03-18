@@ -57,7 +57,7 @@ public class RegisterController extends app.Controller {
             return "redirect:/register";
         }
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping("/")
