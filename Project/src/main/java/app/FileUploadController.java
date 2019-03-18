@@ -3,6 +3,8 @@ package app;
 import app.Utils.StringUtils;
 import app.exceptions.BadFileException;
 import app.models.Article;
+import app.models.Role;
+import app.models.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -58,7 +60,9 @@ public class FileUploadController extends app.Controller {
     @GetMapping("/getfile/{id}")
     public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
         Article article = articleRepository.findById(id).get();
-        if (!article.getUsers().contains(super.getUser())) {
+        User currentUser = super.getUser();
+        // allow editors to download all files
+        if (!article.getUsers().contains(currentUser) && currentUser.getRole() != Role.EDITOR) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         HttpHeaders headers = new HttpHeaders();
