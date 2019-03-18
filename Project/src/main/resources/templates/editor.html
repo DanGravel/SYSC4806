@@ -26,7 +26,7 @@
             <th>Accept/Reject</th>
         </thead>
         <tbody>
-            <tr th:each="article: ${articles}">
+            <tr th:each="article: ${articles}" th:style="${article.isOnTime() ? '' : 'background-color: #FF6961'}">
                 <td th:text="${article.fileName}"></td>
                 <td>
                     <form method="PATCH" th:action="@{/updateReviewer}" action="#">
@@ -47,7 +47,7 @@
                         <input type="hidden" name="articleId" th:value=${article.id} />
                         <div class="input-group mb-3">
                             <input type="text" name="date" class="form-control datetimepicker-input" th:id="datetimepicker + ${article.id}" data-toggle="datetimepicker" th:attr="data-target='#datetimepicker' + ${article.id}"
-                                th:placeholder="${article.getReviewDueDate() != null} ? ${article.getReviewDueDate()} : ''"  />
+                                th:placeholder="${article.getFormattedDueDate() != null} ? ${article.getFormattedDueDate()} : ''"  />
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-dark">
                                     <i class="fas fa-check-square"></i>
