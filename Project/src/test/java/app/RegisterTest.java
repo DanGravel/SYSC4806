@@ -9,7 +9,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,18 +34,18 @@ public class RegisterTest {
                         .with(csrf())).andExpect(status().isFound());
     }
 
+
     /**
-     * Tests login
+     * Tests registration with user that already has username
      * @throws Exception
      */
     @Test
     @WithMockUser(username="user", password = "password", roles={"SUBMITTER"})
-    public void login() throws Exception {
-
-        mockMvc.perform(formLogin())
-                .andExpect(status().isFound());
+    public void registerUsernameUsed() throws Exception {
+        mockMvc.perform(post("/register")
+                .param("username", "user")
+                .param("password", "password")
+                .param("role", "SUBMITTER")
+                .with(csrf())).andExpect(status().is5xxServerError());
     }
-
-
-
 }

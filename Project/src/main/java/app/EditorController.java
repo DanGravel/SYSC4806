@@ -86,7 +86,7 @@ public class EditorController extends app.Controller {
     public String updateDueDate(@RequestParam("articleId") long articleId, @RequestParam("date") String date) {
         Article article = articleRepository.findById(articleId).get();
         try {
-            Date date1= new SimpleDateFormat("EEEE, MMMM d yyyy, h:m a").parse(date);
+            Date date1= new SimpleDateFormat("EEEE, MMMM d, yyyy h:m a").parse(date);
             article.setReviewDueDate(date1);
             articleRepository.save(article);
             return "redirect:/editor";

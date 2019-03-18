@@ -1,5 +1,10 @@
 $(document).ready( function () {
-    $('#editor_table').DataTable();
+    $("#editor_table").DataTable( {
+            "columnDefs": [ {
+              "targets"  : "no-sort",
+              "orderable": false,
+            }]
+    });
     $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
         useCurrent : false,
         sideBySide : true,
@@ -9,7 +14,7 @@ $(document).ready( function () {
             showClose: true,
             showToday: false
         },
-        format: "dddd, MMMM D YYYY, h:mm A",
+        format: "dddd, MMMM D, YYYY h:mm A",
         icons: {
             time: 'fas fa-clock',
             date: 'fas fa-calendar',
