@@ -15,11 +15,13 @@ function checkFileSize(event) {
         alertUpload("ERROR: File Too Large");
         event.preventDefault();
         document.getElementById("fileUploadForm").reset();
+        $(".custom-file-label").removeClass("selected").html("Select File for Upload");
         return;
     } else if (file.size <= 0) {
         alertUpload("ERROR: File Contains no Data");
         event.preventDefault();
         document.getElementById("fileUploadForm").reset();
+        $(".custom-file-label").removeClass("selected").html("Select File for Upload");
         return;
     }
 
