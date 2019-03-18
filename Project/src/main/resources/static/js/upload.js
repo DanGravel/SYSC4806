@@ -30,6 +30,23 @@ function alertUpload(errorMsg) {
     $('.alert').show();
 }
 
+function deleteFile(id) {
+    let isConfirmed = confirm("Are you sure you would like to delete this file?");
+    if (isConfirmed) {
+        $.ajax({
+            url: "/upload/" + id,
+            type: "DELETE",
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': $('[name="_csrf"]').attr('value')
+            },
+            success: function () {
+                $("#article" + id).remove();
+                $("#successAlert").show();
+            }
+        });
+    }
+}
 
 $(function() {
 
@@ -55,7 +72,7 @@ $(function() {
 
     });
 
-    $('#close').click(function () {
+    $('.close').click(function () {
         $('.alert').hide();
     })
 

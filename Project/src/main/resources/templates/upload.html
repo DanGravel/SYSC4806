@@ -7,14 +7,19 @@
     <script src="/js/upload.js"></script>
     <link rel="stylesheet" href="/css/upload.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/webjars/font-awesome/5.7.2/css/all.min.css" />
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
     <div class="alert alert-danger alert-dismissable">
-        <button id="close" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <span id="errorMsg"></span>
-        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span id="errorMsg"></span>
     </div>
+    <div id="successAlert" class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        File Deleted Succesfully
+    </div>
+
 
 
     <div class="container">
@@ -50,12 +55,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr scope="row" th:each="article: ${articles}">
+                <tr th:id="'article' + ${article.id}" scope="row" th:each="article: ${articles}">
                     <td th:text="${article.fileName}"></td>
                     <td th:text="${article.date}"></td>
                     <td th:text="${article.review}"></td>
                     <td th:text="${article.state}"></td>
-                    <td><a th:href="@{/getfile/{id}(id=${article.id})}">Download</a></td>
+                    <td>
+                        <a th:href="@{/getfile/{id}(id=${article.id})}">Download</a> &nbsp;
+                        <button type="button" class="btn btn-danger" th:onclick="'deleteFile(\'' + ${article.id} + '\');'">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
