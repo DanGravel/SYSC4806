@@ -1,5 +1,10 @@
 $(document).ready( function () {
-    $('#editor_table').DataTable();
+    $("#editor_table").DataTable( {
+            "columnDefs": [ {
+              "targets"  : "no-sort",
+              "orderable": false,
+            }]
+    });
     $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
         useCurrent : false,
         sideBySide : true,
