@@ -11,7 +11,7 @@
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
-    <div class="alert alert-danger alert-dismissable">
+    <div id="errorAlert" class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span id="errorMsg"></span>
     </div>
@@ -28,12 +28,10 @@
              <ul>
                  <li>
                     <div class="input-group">
-                        <label class="input-group-btn">
-                                <span class="btn btn-secondary">
-                                    Browse&hellip; <input id="fileLoad" type="file" name="file" style="display: none;" multiple>
-                                </span>
-                        </label>
-                        <input type="text"  placeholder="Select File to Upload" class="form-control" readonly>
+                        <div class="custom-file">
+                            <label class="custom-file-label" for="fileLoad">Select File for Upload</label>
+                            <input type="file" name="file"  class="custom-file-input" id="fileLoad">
+                        </div>
                     </div>
                  </li>
                  <li>
