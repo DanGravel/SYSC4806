@@ -37,6 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,19 +47,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class FileUploadControllerTest {
     @Autowired
     private MockMvc mock;
-
-    @MockBean
-    private FileUploadController uploadControllerMock;
-
-    @Before
-    public void setup() {
-        Article a = new Article();
-        a.setId(1);
-        a.setData("lksdjhgpiuasdhjg9asorehng;klasjdghas;ldkf0".getBytes());
-        a.setFileName("HEEHEE.txt");
-        a.setFileType("text/plain");
-        a.setDate(new Date());
-    }
 
     @Test
     @WithMockUser(username = "user", password = "password", roles = {"SUBMITTER"})
@@ -83,7 +71,7 @@ public class FileUploadControllerTest {
         mock.perform(MockMvcRequestBuilders.multipart("/upload")
                         .file(mockFile)
                         .with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -96,6 +84,7 @@ public class FileUploadControllerTest {
     public void deleteFile() throws Exception {
         mock.perform(delete("/upload/1")
                         .with(csrf()))
+                .andDo(print())
                 .andExpect(status().isFound());
     }
 }
