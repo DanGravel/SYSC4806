@@ -1,4 +1,5 @@
 const fileSizeLimit = 10000000; //10 MB in bytes
+let previousFile = null;
 function checkFileSize(event) {
     var fileElement = document.getElementById("fileLoad");
     var fileArr = fileElement.files;
@@ -54,10 +55,11 @@ $(function() {
 
     $(".custom-file-input").on("change", function() {
         if (!this.files || !this.files[0]) {
-            alertUpload("ERROR: No File Selected")
+            document.getElementById('fileLoad').files = previousFile;
             return;
         }
 
+        previousFile = this.files;
         let fileName = this.files[0].name;
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
