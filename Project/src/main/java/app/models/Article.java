@@ -25,6 +25,7 @@ public class Article
 
     @Lob
     private byte[] data;
+    @Lob
     private byte[] review;
 
     public Article() {

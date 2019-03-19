@@ -43,14 +43,15 @@ public class ReviewerController extends app.Controller {
      * @return
      * @throws IOException
      */
-    @PostMapping("/review")
-    public String uploadFile(@RequestParam String articleId, @RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("/review/{id}")
+    public String uploadFile(@PathVariable(value="id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
+        System.out.println("Wassup bitches");
         if (file == null || StringUtils.isNullOrEmpty(file.getOriginalFilename())
                 || StringUtils.isNullOrEmpty(file.getContentType()) || file.getBytes().length <= 0) {
             //This is how spring handles bad requests, throws exceptions.
             throw new BadFileException();
         }
-        articleRepository.findById(Long.parseLong(articleId)).ifPresent((Article article)  -> {
+        articleRepository.findById(id).ifPresent((Article article)  -> {
             try{
                 article.setReview(file.getBytes());
                 article.setReviewFileType(file.getContentType());
