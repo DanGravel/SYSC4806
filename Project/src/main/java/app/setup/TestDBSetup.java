@@ -44,7 +44,7 @@ public class TestDBSetup {
         createArticle(articleRepository, userRepository.findByUsername("test1"), userRepository.findByUsername("test3"), 100);
         for(int i = 0; i < 20; ++i) {
             if (i < 10) {
-                createArticle(articleRepository, userRepository.findByUsername("test1"), null, i);
+                createArticle(articleRepository, userRepository.findByUsername("test1"), userRepository.findByUsername("test3"), i);
             } else {
                 createArticle(articleRepository, userRepository.findByUsername("test7"), null, i);
             }
