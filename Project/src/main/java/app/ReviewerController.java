@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +44,6 @@ public class ReviewerController extends app.Controller {
      */
     @PostMapping("/review/{id}")
     public String uploadFile(@PathVariable(value="id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
-        System.out.println("Wassup bitches");
         if (file == null || StringUtils.isNullOrEmpty(file.getOriginalFilename())
                 || StringUtils.isNullOrEmpty(file.getContentType()) || file.getBytes().length <= 0) {
             //This is how spring handles bad requests, throws exceptions.
