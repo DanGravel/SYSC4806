@@ -4,7 +4,6 @@ import app.models.Article;
 import app.models.ArticleState;
 import app.models.Role;
 import app.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
