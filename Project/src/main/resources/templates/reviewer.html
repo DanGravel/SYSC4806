@@ -4,25 +4,73 @@
     <meta charset="UTF-8">
     <title>Reviewer</title>
     <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/datatables/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/css/upload.css"/>
+    <link rel="stylesheet" href="/css/reviewer.css"/>
+    <script src="webjars/jquery/jquery.min.js"></script>
+    <script src="webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/reviewModal.js"></script>
+    <script src="/js/upload.js"></script>
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
-    <table>
-        <thead>
-        <th>ID</th>
-        <th>Filename</th>
-        <th>Status</th>
-        <th>Due Date</th>
-        </thead>
-        <tbody>
-        <tr th:each="article: ${articles}">
-            <td th:text="${article.id}"></td>
-            <td th:text="${article.fileName}"></td>
-            <td th:text="${article.state}"></td>
-            <td th:text="${article.date}"></td>
-            <td><a th:href="@{/review/{id}(id=${article.id})}">Submit Review</a></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <table class="table table-bordered" id="reviewer_table">
+            <thead>
+            <th>Filename</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Submission Date</th>
+            </thead>
+            <tbody>
+            <tr th:each="article: ${articles}">
+                <td th:text="${article.fileName}"></td>
+                <td th:text="${article.state}"></td>
+                <td th:text="${article.reviewDueDate}"></td>
+                <td th:text="${article.date}"></td>
+                <td th:switch="${article.review}" class="btn-td">
+                    <span th:case="NULL" class="btn-div">
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}">Submit Review</button>
+                    </span>
+                    <span th:case="*" class="btn-div">
+                        <a class="btn btn-primary btn-sm" th:href="@{/review/{id}(id=${article.id})}">Download Review</a>
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}">Edit Submission</button>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Submit Review</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/review/}">
+                        <ul>
+                            <li>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <label class="custom-file-label" for="fileLoad">Select File for Upload</label>
+                                        <input type="file" name="file"  class="custom-file-input" id="fileLoad">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)">
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

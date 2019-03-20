@@ -36,15 +36,9 @@ public class EditorController extends app.Controller {
     public String getDashboard(Model model) {
         User user = getUser();
         Iterable<Article> articles;
-        if (user.getRole() == Role.EDITOR) {
-            articles = articleRepository.findAll();
-        }
-        else {
-            articles = articleRepository.findByUsers(getUser());
-        }
-
+        articles = articleRepository.findAll();
         model.addAttribute("articles", articles);
-        model.addAttribute("role", getUser().getRole());
+        model.addAttribute("role", user.getRole());
         return "editor";
     }
 
@@ -104,9 +98,13 @@ public class EditorController extends app.Controller {
     public String acceptArticle(@RequestParam("articleId") long articleId, @RequestParam("isAccepted") boolean isAccepted) {
         // throws NoSuchElementException due to Optional<T> type
         Article article = articleRepository.findById(articleId).get();
-        article.setAccepted(isAccepted, getUser().getRole());
-        articleRepository.save(article);
-        return "redirect:/editor";
+        try {
+            article.setAccepted(isAccepted, getUser().getRole());
+            articleRepository.save(article);
+            return "redirect:/editor";
+        } catch (Exception exception) {
+            return "redirect:/editor";
+        }
     }
 
 

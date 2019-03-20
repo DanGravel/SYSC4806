@@ -17,7 +17,7 @@ public class Article
     private List<User> users;
     private String fileName;
     private String fileType;
-    private String review;
+    private String reviewFileType;
     private ArticleState state;
     private Date date;
     private Date reviewDueDate;
@@ -25,6 +25,8 @@ public class Article
 
     @Lob
     private byte[] data;
+    @Lob
+    private byte[] review;
 
     public Article() {
         this.users = new ArrayList<>();
@@ -69,6 +71,10 @@ public class Article
         state = ArticleState.SUBMITTED;
     }
 
+    public String getReviewFileType() { return reviewFileType; }
+
+    public void setReviewFileType(String reviewFileType) { this.reviewFileType = reviewFileType; }
+
     public String getFileName() {
         return fileName;
     }
@@ -91,6 +97,11 @@ public class Article
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public void deleteReview() {
+        this.setReview(null);
+        this.setReviewFileType(null);
     }
 
     public String getDate() {
@@ -127,11 +138,11 @@ public class Article
         return state.toString();
     }
 
-    public String getReview() {
+    public byte[] getReview() {
         return review;
     }
 
-    public void setReview(String review) {
+    public void setReview(byte[] review) {
         this.review = review;
     }
 
