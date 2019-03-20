@@ -26,8 +26,8 @@
             <tr th:each="article: ${articles}">
                 <td th:text="${article.fileName}"></td>
                 <td th:text="${article.state}"></td>
-                <td th:text="${article.reviewDueDate}"></td>
-                <td th:text="${article.getFormattedReviewSubmissionDate() != null ? article.getFormattedReviewSubmissionDate() : ''}"></td>
+                <td th:text="${article.getFormattedDueDate()}"></td>
+                <td th:text="${article.getFormattedReviewSubmissionDate()}"></td>
                 <td th:switch="${article.review}" class="btn-td">
                     <span th:case="NULL" class="btn-div">
                         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}">Submit Review</button>
