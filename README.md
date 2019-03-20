@@ -9,16 +9,18 @@ Article Submitter submits Article (some attachment, any format is ok). The Edito
 
 The current features that have been implemented into the system are:
 - Login and sign up pages
-- Page to upload documents to the system for submitters
-- Allow editors to assign files to a reviewer
-- Reviewers can download the file to look over it and post a review for the file
-- The editor can use the review to accept or reject the file
+- Page to upload articles to the system for submitters
+- Editor can delete files if they want
+- Allow editors to assign articles to a reviewer
+- Editor can assign a date for the reviewer to submit a review by
+- Reviewers can download the article to look over it and upload a review for the article
+- The editor can accept or reject a review
 
 The project also has CI integration with Travis CI. There are unit tests written to help with the process.
 
 **Next Iteration**
 
-The next iteration will focus on making styling changes, fixing bugs and adding more testing to make sure current functionality is not broken. 
+The next iteration will focus on testing the UI for bugs and making patches, adding the ability for editors to download the review and completing a full test suite.
 
 **DB Schema**
 
@@ -30,30 +32,39 @@ Description: Holds information on the User. The user can have a role of Reviewer
 
 | Name      | Type    | Key      |
 |:---------:|:-------:|:--------:|
-| id        | int     | Primary  |
+| id        | long    | Primary  |
+| username  | string  |          |
 | password  | string  |          |
 | role      | string  |          |
  
 Table: Article
 Description: Holds Article information. Keeps track of the state of the review.
 
-| Name      | Type    | Key      |
-|:---------:|:-------:|:--------:|
-| id        | int     | Primary  |
-| filename  | string  |          |
-| filetype  | string  |          |
-| review    | string  |          |
-| state     | string  |          |   
-| date      | Date    |          |   
-| data      | Blob    |          |
+| Name                 | Type    | Key      |
+|:--------------------:|:-------:|:--------:|
+| id                   | long    | Primary  |
+| filename             | string  |          |
+| filetype             | string  |          |
+| review               | string  |          |
+| reviewDueDate        | date    |          |
+| reviewFileType       | string  |          |
+| reviewSubmissionDate | date    |          |
+| state                | string  |          |   
+| date                 | Date    |          |   
+| data                 | Blob    |          |
+| review               | Blob    |          |
 
 Table: Article_User
 Description: Many-To-Many table between Users and Articles. Multiple users will be associated to a file and a User can also have many files hence the Many-To-Many relationship.
 
 | Name        | Type    | Key      |
 |:-----------:|:-------:|:--------:|
-| article_id  | int     | foreign  |
-| user_id     | int     | foreign  |
+| article_id  | long    | foreign  |
+| users_id    | long    | foreign  |
+
+Relationship Diagram: 
+
+![](Project/UML%20Images/DBDiagram%20(1).png)
 
 **UML Class Diagram**
-![](Project/UML%20Images/AppUMLIteration1.png)
+![](Project/UML%20Images/ClassDiagram%20(1).png)
