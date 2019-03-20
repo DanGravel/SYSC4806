@@ -59,7 +59,7 @@ Description: Many-To-Many table between Users and Articles. Multiple users will 
 
 Relationship Diagram: 
 
-![](Project/UML%20Images/DBDiagram (1).png)
+![](Project/UML%20Images/DBDiagram%20(1).png)
 
 **UML Class Diagram**
-![](Project/UML%20Images/ClassDiagram (1).png)
+![](Project/UML%20Images/ClassDiagram%20(1).png)
