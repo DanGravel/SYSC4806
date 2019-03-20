@@ -32,30 +32,35 @@ Description: Holds information on the User. The user can have a role of Reviewer
 
 | Name      | Type    | Key      |
 |:---------:|:-------:|:--------:|
-| id        | int     | Primary  |
+| id        | long    | Primary  |
+| username  | string  |          |
 | password  | string  |          |
 | role      | string  |          |
  
 Table: Article
 Description: Holds Article information. Keeps track of the state of the review.
 
-| Name      | Type    | Key      |
-|:---------:|:-------:|:--------:|
-| id        | int     | Primary  |
-| filename  | string  |          |
-| filetype  | string  |          |
-| review    | string  |          |
-| state     | string  |          |   
-| date      | Date    |          |   
-| data      | Blob    |          |
+| Name                 | Type    | Key      |
+|:--------------------:|:-------:|:--------:|
+| id                   | long    | Primary  |
+| filename             | string  |          |
+| filetype             | string  |          |
+| review               | string  |          |
+| reviewDueDate        | date    |          |
+| reviewFileType       | string  |          |
+| reviewSubmissionDate | date    |          |
+| state                | string  |          |   
+| date                 | Date    |          |   
+| data                 | Blob    |          |
+| review               | Blob    |          |
 
 Table: Article_User
 Description: Many-To-Many table between Users and Articles. Multiple users will be associated to a file and a User can also have many files hence the Many-To-Many relationship.
 
 | Name        | Type    | Key      |
 |:-----------:|:-------:|:--------:|
-| article_id  | int     | foreign  |
-| user_id     | int     | foreign  |
+| article_id  | long    | foreign  |
+| users_id    | long    | foreign  |
 
 Relationship Diagram: 
 
