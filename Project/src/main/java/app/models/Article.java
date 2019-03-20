@@ -129,6 +129,10 @@ public class Article
         if(this.reviewDueDate == null) return null;
         return new SimpleDateFormat("EEEE, MMMM d, yyyy h:m a").format(this.reviewDueDate);
     }
+    public String getFormattedReviewSubmissionDate() {
+        if(this.reviewSubmissionDate == null) return null;
+        return new SimpleDateFormat("EEEE, MMMM d, yyyy h:m a").format(this.reviewSubmissionDate);
+    }
 
     public void setReviewDueDate(Date date) {
         this.reviewDueDate = date;

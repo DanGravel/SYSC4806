@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import app.models.Article;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import app.models.Role;
@@ -53,6 +55,7 @@ public class ReviewerController extends app.Controller {
             try{
                 article.setReview(file.getBytes());
                 article.setReviewFileType(file.getContentType());
+                article.setReviewSubmissionDate(new Date());
             } catch(IOException e) {}
             articleRepository.save(article);
         });
