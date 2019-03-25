@@ -1,5 +1,6 @@
 package app;
 
+import app.exceptions.UserExistsException;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,9 +63,6 @@ public class RegisterController extends app.Controller {
 
         return "redirect:/";
     }
-
-    @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR, reason="User already exists")
-    public class UserExistsException extends RuntimeException {}
 
     @GetMapping("/")
     public String defaultPage() throws Exception {
