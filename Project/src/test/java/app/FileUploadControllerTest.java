@@ -30,7 +30,6 @@ public class FileUploadControllerTest {
     @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
     public void testGetFileUpload() throws Exception {
         mock.perform(get("/upload"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("articles"));
     }
@@ -64,7 +63,7 @@ public class FileUploadControllerTest {
                 .with(csrf()))
                 .andExpect(status().isBadRequest());
     }
-    
+
     @Test
     @WithMockUser(username = "test1", password = "password", roles= {"SUBMITTER"})
     public void testGetFileById() throws Exception {
