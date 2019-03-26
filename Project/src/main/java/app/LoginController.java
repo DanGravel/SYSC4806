@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * Controller for /login
  */
 @Controller
-public class LoginController {
+public class LoginController extends app.Controller{
 
     /**
      * Handles get request for /login
