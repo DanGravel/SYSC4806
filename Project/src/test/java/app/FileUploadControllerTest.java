@@ -64,7 +64,7 @@ public class FileUploadControllerTest {
                 .with(csrf()))
                 .andExpect(status().isBadRequest());
     }
-
+    
     @Test
     @WithMockUser(username = "test1", password = "password", roles= {"SUBMITTER"})
     public void testGetFileById() throws Exception {
@@ -76,6 +76,13 @@ public class FileUploadControllerTest {
         String content = result.getResponse().getContentAsString();
 
         assert(content.equals("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST"));
+    }
+
+    @Test
+    @WithMockUser(username = "test4", password = "password", roles = {"REVIEWER"})
+    public void testGetFileById_UnauthorizedUser() throws Exception {
+        mock.perform(get("/getfile/1"))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
