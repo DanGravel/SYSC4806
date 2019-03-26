@@ -1,7 +1,9 @@
 package app;
 
+import app.exceptions.UserExistsException;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -42,14 +44,16 @@ public class RegisterController extends app.Controller {
 
     @PostMapping("/register")
     public String newUser(@ModelAttribute User user,  HttpServletRequest request){
-        if ( userRepository.findByUsername(user.getUsername()) != null) {
-            throw new IllegalStateException("User already exists!");
-        }
 
         String unencryptedPass = user.getPassword();
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-        inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole().toString()).build());
+
+        try {
+            inMemoryUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(user.getUsername()).password(user.getPassword()).roles(user.getRole().toString()).build());
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new UserExistsException();
+        }
 
         try {
             request.login(user.getUsername(), unencryptedPass);
