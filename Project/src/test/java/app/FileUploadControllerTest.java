@@ -9,6 +9,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -26,7 +27,7 @@ public class FileUploadControllerTest {
     private MockMvc mock;
 
     @Test
-    @WithMockUser(username = "user", password = "password", roles = {"SUBMITTER"})
+    @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
     public void testGetFileUpload() throws Exception {
         mock.perform(get("/upload"))
                 .andExpect(status().isOk())
@@ -52,16 +53,58 @@ public class FileUploadControllerTest {
     }
 
     @Test
-    public void testGetFileById() throws Exception {
-        mock.perform(get("/getfile/1"))
-                .andExpect(status().isFound());
+    @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
+    public void testUploadFile_NoFileName() throws Exception {
+        //file without original filename
+        MockMultipartFile mockFile = new MockMultipartFile("file","","application/pdf", "wewewewewewewewew".getBytes());
+
+        mock.perform(MockMvcRequestBuilders.multipart("/upload")
+                .file(mockFile)
+                .with(csrf()))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void deleteFile() throws Exception {
+    @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
+    public void testUploadFile_NoFile() throws Exception {
+        mock.perform(MockMvcRequestBuilders.multipart("/upload")
+                .with(csrf()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser(username = "test1", password = "password", roles= {"SUBMITTER"})
+    public void testGetFileById() throws Exception {
+        MvcResult result =
+                mock.perform(get("/getfile/1"))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assert(content.equals("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST"));
+    }
+
+    @Test
+    @WithMockUser(username = "test4", password = "password", roles = {"REVIEWER"})
+    public void testGetFileById_UnauthorizedUser() throws Exception {
+        mock.perform(get("/getfile/1"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
+    public void testDeleteFile() throws Exception {
         mock.perform(delete("/upload/1")
                         .with(csrf()))
-                .andDo(print())
-                .andExpect(status().isFound());
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
+    public void testDeleteFile_FileNoExist() throws Exception {
+        mock.perform(delete("/upload/75")
+                .with(csrf()))
+                .andExpect(status().isBadRequest());
     }
 }
