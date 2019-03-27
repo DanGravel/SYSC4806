@@ -24,6 +24,10 @@ import static org.junit.Assert.*;
 public class ArticleTest {
     public static final String IN_REVIEW = "In Review";
     public static final String SUBMITTED = "Submitted";
+    public static final String BASIC_DATE_FORMAT = "yyyy-MM-dd hh:mm a";
+    public static final String REVIEW = "This article was absolute *#@#!";
+    public static final String FORMATTED_DATE = "EEEE, MMMM d, yyyy h:m a";
+    public static final String TEXT_PLAIN = "text/plain";
     private Article testArticle;
     private User testReviewer;
     private User testEditor;
@@ -88,7 +92,7 @@ public class ArticleTest {
 
     @Test
     public void testGetDate() {
-        String pattern = "yyyy-MM-dd hh:mm a";
+        String pattern = BASIC_DATE_FORMAT;
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         Date currDate = new Date();
         testArticle.setDate(currDate);
@@ -108,7 +112,7 @@ public class ArticleTest {
 
     @Test
     public void testSetAccepted() {
-        byte[] review = "This article was absolute *#@#!".getBytes();
+        byte[] review = REVIEW.getBytes();
         testArticle.setReview(review);
 
         testArticle.setAccepted(true, Role.EDITOR);
@@ -161,7 +165,7 @@ public class ArticleTest {
 
     @Test
     public void testGetFormattedDates() {
-        String pattern = "EEEE, MMMM d, yyyy h:m a";
+        String pattern = FORMATTED_DATE;
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         Date d = new Date();
 
@@ -175,9 +179,9 @@ public class ArticleTest {
 
     @Test
     public void testDeleteReview() {
-        byte[] review = "oh no who hired this guy. I knew he'd be bad during the interview.".getBytes();
+        byte[] review = REVIEW.getBytes();
         testArticle.setReview(review);
-        testArticle.setReviewFileType("text/plain");
+        testArticle.setReviewFileType(TEXT_PLAIN);
 
         testArticle.deleteReview();
         assertEquals(null, testArticle.getReview());
