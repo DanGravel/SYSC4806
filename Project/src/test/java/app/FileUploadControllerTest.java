@@ -65,6 +65,14 @@ public class FileUploadControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
+    public void testUploadFile_NoFile() throws Exception {
+        mock.perform(MockMvcRequestBuilders.multipart("/upload")
+                .with(csrf()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @WithMockUser(username = "test1", password = "password", roles= {"SUBMITTER"})
     public void testGetFileById() throws Exception {
         MvcResult result =
