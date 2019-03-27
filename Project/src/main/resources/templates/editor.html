@@ -51,7 +51,7 @@
                         <input type="hidden" name="articleId" th:value=${article.id} />
                         <div class="input-group mb-3">
                             <input type="text" name="date" class="form-control datetimepicker-input" th:id="datetimepicker + ${article.id}" data-toggle="datetimepicker" th:attr="data-target='#datetimepicker' + ${article.id}"
-                                th:placeholder="${article.getFormattedDueDate() != null} ? ${article.getFormattedDueDate()} : ''"  />
+                                th:placeholder="${article.getFormattedDueDate()}"  />
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-dark">
                                     <i class="fas fa-check-square"></i>
