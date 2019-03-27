@@ -61,4 +61,9 @@ public class User {
         User u = (User) o;
         return u.id == this.id && u.username == this.username && u.role == this.role;
     }
+
+    @Override
+    public String toString() {
+        return "User id = " + this.getId() + " with Username = " + this.getUsername();
+    }
 }

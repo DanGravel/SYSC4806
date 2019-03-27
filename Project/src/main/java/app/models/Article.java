@@ -2,9 +2,7 @@ package app.models;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Article
@@ -199,5 +197,23 @@ public class Article
             return reviewDueDate.after(new Date()); //Checks review date against current date
         }
         return true; //On time if you dont have a due date
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return id == article.id &&
+                Objects.equals(users, article.users) &&
+                Objects.equals(fileName, article.fileName) &&
+                Objects.equals(fileType, article.fileType) &&
+                Objects.equals(reviewFileType, article.reviewFileType) &&
+                state == article.state &&
+                Objects.equals(date, article.date) &&
+                Objects.equals(reviewDueDate, article.reviewDueDate) &&
+                Objects.equals(reviewSubmissionDate, article.reviewSubmissionDate) &&
+                Arrays.equals(data, article.data) &&
+                Arrays.equals(review, article.review);
     }
 }
