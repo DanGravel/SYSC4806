@@ -27,3 +27,8 @@ $(document).ready( function () {
     }});
 } );
 
+$(function(){
+    $("[id*='datetimepicker']").on('hide.datetimepicker', function(e) {
+       this.closest("form").submit();
+    });
+});
