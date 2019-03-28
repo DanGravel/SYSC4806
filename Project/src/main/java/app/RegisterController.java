@@ -3,7 +3,6 @@ package app;
 import app.exceptions.UserExistsException;
 import app.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -61,7 +60,7 @@ public class RegisterController extends app.Controller {
      * @return redirects to user homepage
      */
     @PostMapping("/register")
-    public String newUser(@ModelAttribute User user,  HttpServletRequest request){
+    public String newUser(@ModelAttribute User user,  HttpServletRequest request) throws ServletException {
 
         String unencryptedPass = user.getPassword();
         user.setPassword(encoder.encode(user.getPassword()));
@@ -72,12 +71,7 @@ public class RegisterController extends app.Controller {
         } catch (Exception e) {
             throw new UserExistsException();
         }
-
-        try {
-            request.login(user.getUsername(), unencryptedPass);
-        } catch (ServletException e) {
-            return "redirect:/register";
-        }
+        request.login(user.getUsername(), unencryptedPass);
 
         return "redirect:/";
     }
