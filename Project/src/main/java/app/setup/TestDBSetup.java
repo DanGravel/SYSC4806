@@ -28,6 +28,8 @@ public class TestDBSetup {
         article.addAuthorizedUser(user);
         if (reviewer != null) {
             article.addReviewer(Role.EDITOR, reviewer);
+            article.setReviewFileType("text/plain");
+            article.setReview("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST".getBytes());
         }
 
         articleRepository.save(article);
