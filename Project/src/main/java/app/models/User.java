@@ -64,6 +64,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User id = " + this.getId() + " with Username = " + this.getUsername();
+        return this.getUsername();
     }
 }
