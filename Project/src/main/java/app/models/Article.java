@@ -185,6 +185,10 @@ public class Article
         return (state == ArticleState.ACCEPTED);
     }
 
+    public boolean isRejected() {
+        return (state == ArticleState.REJECTED);
+    }
+
     /**
      * Checks to see if a review has been submitted on time
      * @return boolean true if review has been submitted on time
