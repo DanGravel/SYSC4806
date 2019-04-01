@@ -96,7 +96,7 @@ public class EditorController extends app.Controller {
      * @return The editor.html view reloaded
      */
     @GetMapping("/status")
-    public String acceptArticle(@RequestParam("articleId") long articleId, @RequestParam("isAccepted") boolean isAccepted) {
+    public String articleStatus(@RequestParam("articleId") long articleId, @RequestParam("isAccepted") boolean isAccepted) {
         // throws NoSuchElementException due to Optional<T> type
         Article article = articleRepository.findById(articleId).get();
         try {
