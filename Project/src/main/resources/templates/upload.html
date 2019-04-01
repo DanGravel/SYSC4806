@@ -48,6 +48,7 @@
                     <th>File Name</th>
                     <th>Upload Date</th>
                     <th>Reviewer</th>
+                    <th>Review Due Date</th>
                     <th>State</th>
                     <th>Download</th>
                 </tr>
@@ -57,6 +58,7 @@
                     <td th:text="${article.fileName}"></td>
                     <td th:text="${article.date}"></td>
                     <td th:text="${article.getReviewer().username}"></td>
+                    <td th:text="${article.getFormattedDueDate()}"></td>
                     <td th:text="${article.state}"></td>
                     <td>
                         <a th:href="@{/getfile/{id}(id=${article.id})}">Download</a> &nbsp;
