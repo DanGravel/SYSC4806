@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
@@ -88,48 +89,26 @@ public class EditorController extends app.Controller {
         }
     }
 
-    /**
-     * Accepts or rejects article
-     * @param articleId id of article
-     * @param accepted status of article acceptance
+    /***
+     * Accepts or rejects the article given by articleId and isAccepted
+     * @param articleId The article in the table row clicked on
+     * @param isAccepted True if accepted was clicked false if reject was clicked
+     * @return The editor.html view reloaded
      */
-    private void setArticleAcceptance(long articleId ,Boolean accepted) {
+    @GetMapping("/status")
+    public String acceptArticle(@RequestParam("articleId") long articleId, @RequestParam("isAccepted") boolean isAccepted) {
         // throws NoSuchElementException due to Optional<T> type
         Article article = articleRepository.findById(articleId).get();
-        article.setAccepted(accepted, getUser().getRole());
-        articleRepository.save(article);
-    }
-
-    /***
-     * Accepts the article given by articleId
-     * @param articleId The article in the table row clicked on
-     * @return The editor.html view reloaded
-     */
-    @GetMapping("/acceptArticle")
-    public String acceptArticle(@RequestParam("articleId") long articleId) {
         try {
-            setArticleAcceptance(articleId, true);
+            // Only update if the article is not already accepted
+            article.setAccepted(isAccepted, getUser().getRole());
+            articleRepository.save(article);
+
             return "redirect:/editor";
         } catch (Exception exception) {
             return "redirect:/editor";
         }
     }
-
-    /***
-     * Rejects the article given by articleId
-     * @param articleId The article in the table row clicked on
-     * @return The editor.html view reloaded
-     */
-    @GetMapping("/rejectArticle")
-    public String regectArticle(@RequestParam("articleId") long articleId) {
-        try {
-            setArticleAcceptance(articleId, false);
-            return "redirect:/editor";
-        } catch (Exception exception) {
-            return "redirect:/editor";
-        }
-    }
-
 
 
 }
