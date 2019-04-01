@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
@@ -94,13 +95,15 @@ public class EditorController extends app.Controller {
      * @param isAccepted True if accepted was clicked false if reject was clicked
      * @return The editor.html view reloaded
      */
-    @GetMapping("/acceptArticle")
-    public String acceptArticle(@RequestParam("articleId") long articleId, @RequestParam("isAccepted") boolean isAccepted) {
+    @GetMapping("/status")
+    public String articleStatus(@RequestParam("articleId") long articleId, @RequestParam("isAccepted") boolean isAccepted) {
         // throws NoSuchElementException due to Optional<T> type
         Article article = articleRepository.findById(articleId).get();
         try {
+            // Only update if the article is not already accepted
             article.setAccepted(isAccepted, getUser().getRole());
             articleRepository.save(article);
+
             return "redirect:/editor";
         } catch (Exception exception) {
             return "redirect:/editor";

@@ -60,11 +60,10 @@
                     <label th:unless="${article.hasReview()}" th:text="${article.state}"></label>
                 </td>
                 <td>
-                    <form method="PATCH" th:action="@{/acceptArticle}" action="#">
+                    <form class="d-inline" method="PATCH" th:action="@{/status}" action="#">
                         <input type="hidden" name="articleId" th:value="${article.id}" />
-                        <input type="hidden" name="isAccepted" th:value="!${article.isAccepted()}" />
-                        <button style="width: 175px" type="submit" class="btn btn-success" th:disabled="${!article.hasReview()}"  th:text="${article.hasReview()} ? 'Accept' : 'Waiting on Review'"></button>
-                        <button style="width: 175px" type="submit" class="btn btn-danger" th:disabled="${!article.hasReview()}"  th:text="${article.hasReview()} ? 'Reject' : 'Waiting on Review'"></button>
+                        <button name="isAccepted" th:value="${true}" style="width: 175px" type="submit" class="btn btn-success" th:disabled="${!article.hasReview()}"  th:text="${article.hasReview()} ? 'Accept' : 'Waiting on Review'"></button>
+                        <button name="isAccepted" th:value="${false}" style="width: 175px" type="submit" class="btn btn-danger" th:disabled="${!article.hasReview()}"  th:text="${article.hasReview()} ? 'Reject' : 'Waiting on Review'"></button>
                     </form>
                 </td>
             </tr>
