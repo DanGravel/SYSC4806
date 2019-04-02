@@ -16,6 +16,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EditorTest {
+
+    @Autowired
+    protected ArticleRepository articleRepository;
+
     @Autowired
     private MockMvc mock;
 
@@ -30,12 +34,13 @@ public class EditorTest {
     }
 
     @Test
-    @WithMockUser(username = "test3", password = "password", roles = {"Reviewer"})
+    @WithMockUser(username = "test3", password = "password", roles = {"REVIEWER"})
     public void testGetDashboardNotEditor() throws Exception {
         mock.perform(get("/editor"))
                 .andExpect(status().isForbidden())
                 .andReturn();
     }
+
     @Test
     @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
     public void testUpdateDueDate() throws Exception {
@@ -44,6 +49,16 @@ public class EditorTest {
                 .param("date", "Saturday, April 6, 2019 1:52 PM"))
             .andExpect(status().isFound())
             .andReturn();
+    }
+
+    @Test
+    @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
+    public void testUpdateDueDate_BadDate() throws Exception {
+        mock.perform(get("/updateDueDate")
+                .param("articleId", "1")
+                .param("date", "asdfasdfasdf"))
+                .andExpect(status().isFound())
+                .andReturn();
     }
 
     @Test
@@ -58,12 +73,42 @@ public class EditorTest {
 
     @Test
     @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
+    public void testAcceptArticle_NoReview() throws Exception {
+        mock.perform(get("/acceptArticle")
+                .param("articleId", "15")
+                .param("isAccepted", "true"))
+                .andExpect(status().isFound())
+                .andReturn();
+    }
+
+    @Test
+    @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
+    public void testUpdateReviewer_NoReviewer() throws Exception {
+        mock.perform(get("/updateReviewer")
+                .param("articleId", "2")
+                .param("reviewer", "0"))
+                .andExpect(status().isFound())
+                .andReturn();
+    }
+
+    @Test
+    @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
+    public void testUpdateReviewer_RemoveReviewer() throws Exception {
+        mock.perform(get("/updateReviewer")
+                .param("articleId", "2")
+                .param("reviewer", "-1"))
+                .andExpect(status().isFound())
+                .andReturn();
+    }
+
+    @Test
+    @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
     public void testUpdateReviewer() throws Exception {
         mock.perform(get("/updateReviewer")
                 .param("articleId", "2")
                 .param("reviewer", "5"))
-            .andExpect(status().isFound())
-            .andReturn();
+                .andExpect(status().isFound())
+                .andReturn();
     }
 
 
