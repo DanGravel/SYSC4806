@@ -7,16 +7,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.rmi.server.ExportException;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -68,7 +65,7 @@ public class ReviewerTest {
 
     @Test
     @WithMockUser(username = "test3", password = "password", roles = {"REVIEWER"})
-    public void testUploadReview_NoFile() throws Exception {
+    public void testUploadReviewNoFile() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/review/1")
                 .with(csrf()))
                 .andExpect(status().isBadRequest());
@@ -76,7 +73,7 @@ public class ReviewerTest {
 
     @Test
     @WithMockUser(username = "test3", password = "password", roles = {"REVIEWER"})
-    public void testUploadReview_NoFileName() throws Exception {
+    public void testUploadReviewNoFileName() throws Exception {
         //file without original filename
         MockMultipartFile mockFile = new MockMultipartFile("file","","application/pdf", "wewewewewewewewew".getBytes());
 
