@@ -62,6 +62,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div id="errorAlert" class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span id="errorMsg"></span>
+                    </div>
                     <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/review/}">
                         <ul>
                             <li>
