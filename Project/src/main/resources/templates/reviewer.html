@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="webjars/datatables/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/upload.css"/>
     <link rel="stylesheet" href="/css/reviewer.css"/>
+    <link rel="stylesheet" href="webjars/font-awesome/css/all.css">
     <script src="webjars/jquery/jquery.min.js"></script>
+    <script src="webjars/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/js/reviewModal.js"></script>
     <script src="/js/upload.js"></script>
@@ -21,21 +23,26 @@
             <th>Status</th>
             <th>Due Date</th>
             <th>Review Submission Date</th>
+            <th>Review</th>
             </thead>
             <tbody>
             <tr th:each="article: ${articles}">
-                <td th:text="${article.fileName}"></td>
+                <td>
+                    <a th:href="@{/getfile/{id}(id=${article.id})}" th:text="${article.fileName}"></a>
+                </td>
                 <td th:text="${article.state}"></td>
                 <td th:text="${article.getFormattedDueDate()}"></td>
                 <td th:text="${article.getFormattedReviewSubmissionDate()}"></td>
-                <td th:switch="${article.review}" class="btn-td">
-                    <span th:case="NULL" class="btn-div">
-                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}">Submit Review</button>
-                    </span>
-                    <span th:case="*" class="btn-div">
-                        <a class="btn btn-primary btn-sm" th:href="@{/review/{id}(id=${article.id})}">Download Review</a>
-                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}">Edit Submission</button>
-                    </span>
+                <td class="btn-div">
+                    <th:block th:switch="${article.review}">
+                        <th:block th:case="NULL">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}">Submit</button>
+                        </th:block>
+                        <th:block th:case="*">
+                            <a class="btn btn-primary" th:href="@{/review/{id}(id=${article.id})}"><i class="fas fa-download"></i></a>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}"><i class="fas fa-edit"></i></button>
+                        </th:block>
+                    </th:block>
                 </td>
             </tr>
             </tbody>
