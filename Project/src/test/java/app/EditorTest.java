@@ -55,7 +55,7 @@ public class EditorTest {
     @Test
     @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
     public void testAcceptArticle() throws Exception {
-        mock.perform(get("/acceptArticle")
+        mock.perform(get("/status")
                 .param("articleId", "1")
                 .param("isAccepted", "true"))
                 .andExpect(status().isFound());
@@ -64,7 +64,7 @@ public class EditorTest {
     @Test
     @WithMockUser(username = "test2", password = "password", roles = {"EDITOR"})
     public void testAcceptArticle_NoReview() throws Exception {
-        mock.perform(get("/acceptArticle")
+        mock.perform(get("/status")
                 .param("articleId", "15")
                 .param("isAccepted", "true"))
                 .andExpect(status().isFound());
