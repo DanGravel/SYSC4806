@@ -30,6 +30,7 @@ public class TestDBSetup {
             article.addReviewer(Role.EDITOR, reviewer);
             article.setReviewFileType("text/plain");
             article.setReview("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST".getBytes());
+            article.setReviewFileName("review.txt");
         }
 
         articleRepository.save(article);
