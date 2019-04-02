@@ -57,7 +57,7 @@
                 <tr th:id="'article' + ${article.id}" scope="row" th:each="article: ${articles}">
                     <td th:text="${article.fileName}"></td>
                     <td th:text="${article.date}"></td>
-                    <td th:text="${article.getReviewer().username}"></td>
+                    <td th:text="${article.getReviewer() != null ? article.getReviewer().username : ''}"></td>
                     <td th:text="${article.getFormattedDueDate()}"></td>
                     <td th:text="${article.state}"></td>
                     <td>
