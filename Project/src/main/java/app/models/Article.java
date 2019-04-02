@@ -16,6 +16,7 @@ public class Article
     private String fileName;
     private String fileType;
     private String reviewFileType;
+    private String reviewFileName;
     private ArticleState state;
     private Date date;
     private Date reviewDueDate;
@@ -72,6 +73,10 @@ public class Article
     public String getReviewFileType() { return reviewFileType; }
 
     public void setReviewFileType(String reviewFileType) { this.reviewFileType = reviewFileType; }
+
+    public String getReviewFileName() { return reviewFileName; }
+
+    public void setReviewFileName(String reviewFileName) { this.reviewFileName = reviewFileName; }
 
     public String getFileName() {
         return fileName;

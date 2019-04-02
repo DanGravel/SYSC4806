@@ -56,6 +56,7 @@ public class ReviewerController extends app.Controller {
                 article.setReview(file.getBytes());
                 article.setReviewFileType(file.getContentType());
                 article.setReviewSubmissionDate(new Date());
+                article.setReviewFileName(file.getOriginalFilename());
             } catch(IOException e) {}
             articleRepository.save(article);
         });
@@ -78,7 +79,7 @@ public class ReviewerController extends app.Controller {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(article.getReviewFileType()));
         //sets the file name
-        headers.setContentDispositionFormData("review-" + id + ".txt", "review-" + id + ".txt");
+        headers.setContentDispositionFormData(article.getReviewFileName(), article.getReviewFileName());
         //I admittedly have no idea what these cache control things are
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<>(article.getReview(), headers, HttpStatus.OK);
