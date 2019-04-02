@@ -62,7 +62,11 @@ Description: Many-To-Many table between Users and Articles. Multiple users will 
 | article_id  | long    | foreign  |
 | users_id    | long    | foreign  |
 
-Relationship Diagram: 
+Relationship Diagram (IntelliJ Generated):
+
+![](Project/UML%20Images/DBDiagram.png)
+
+Relationship Diagram (Hand Drawn): 
 
 ![](Project/UML%20Images/DBDiagram%20(1).png)
 
