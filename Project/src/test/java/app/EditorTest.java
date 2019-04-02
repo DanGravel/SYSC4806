@@ -24,17 +24,14 @@ public class EditorTest {
     public void testGetDashboard() throws Exception {
         mock.perform(get("/editor"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("articles", "role", "reviewers"))
-                .andReturn();
-
+                .andExpect(model().attributeExists("articles", "role", "reviewers"));
     }
 
     @Test
     @WithMockUser(username = "test3", password = "password", roles = {"REVIEWER"})
     public void testGetDashboardNotEditor() throws Exception {
         mock.perform(get("/editor"))
-                .andExpect(status().isForbidden())
-                .andReturn();
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -43,8 +40,7 @@ public class EditorTest {
         mock.perform(get("/updateDueDate")
                 .param("articleId", "1")
                 .param("date", "Saturday, April 6, 2019 1:52 PM"))
-            .andExpect(status().isFound())
-            .andReturn();
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -53,8 +49,7 @@ public class EditorTest {
         mock.perform(get("/updateDueDate")
                 .param("articleId", "1")
                 .param("date", "asdfasdfasdf"))
-                .andExpect(status().isFound())
-                .andReturn();
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -63,8 +58,7 @@ public class EditorTest {
         mock.perform(get("/acceptArticle")
                 .param("articleId", "1")
                 .param("isAccepted", "true"))
-            .andExpect(status().isFound())
-            .andReturn();
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -73,8 +67,7 @@ public class EditorTest {
         mock.perform(get("/acceptArticle")
                 .param("articleId", "15")
                 .param("isAccepted", "true"))
-                .andExpect(status().isFound())
-                .andReturn();
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -83,8 +76,7 @@ public class EditorTest {
         mock.perform(get("/updateReviewer")
                 .param("articleId", "2")
                 .param("reviewer", "0"))
-                .andExpect(status().isFound())
-                .andReturn();
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -93,8 +85,7 @@ public class EditorTest {
         mock.perform(get("/updateReviewer")
                 .param("articleId", "2")
                 .param("reviewer", "-1"))
-                .andExpect(status().isFound())
-                .andReturn();
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -103,8 +94,7 @@ public class EditorTest {
         mock.perform(get("/updateReviewer")
                 .param("articleId", "2")
                 .param("reviewer", "5"))
-                .andExpect(status().isFound())
-                .andReturn();
+                .andExpect(status().isFound());
     }
 
 
