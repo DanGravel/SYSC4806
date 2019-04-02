@@ -1,5 +1,7 @@
 .btn-div {
-    text-align: right;
+    text-align: center !important;
+    width: 100px !important;
+    box-sizing: content-box !important;
 }
 
 .btn-td {
