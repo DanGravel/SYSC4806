@@ -1,6 +1,7 @@
 package app.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,6 +16,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Article> articles;
 
     public User() {
         this(null, null, null);
