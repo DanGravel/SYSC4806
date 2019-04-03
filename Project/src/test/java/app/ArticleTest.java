@@ -9,7 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
@@ -18,7 +21,8 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestApplication.class, initializers = ConfigFileApplicationContextInitializer.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ArticleTest {
@@ -26,7 +30,7 @@ public class ArticleTest {
     public static final String SUBMITTED = "Submitted";
     public static final String BASIC_DATE_FORMAT = "yyyy-MM-dd hh:mm a";
     public static final String REVIEW = "This article was absolute *#@#!";
-    public static final String FORMATTED_DATE = "EEEE, MMMM d, yyyy h:m a";
+    public static final String FORMATTED_DATE = "EEEE, MMMM d, yyyy h:mm a";
     public static final String TEXT_PLAIN = "text/plain";
     private Article testArticle;
     private User testReviewer;
