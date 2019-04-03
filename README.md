@@ -68,4 +68,4 @@ Relationship Diagram (IntelliJ Generated):
 ![](Project/UML%20Images/DBDiagram.PNG)
 
 **UML Class Diagram**
-![](Project/UML%20Images/ClassDiagram.png)
+![](Project/UML%20Images/ClassDiagram.jpg)
