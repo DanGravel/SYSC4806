@@ -24,7 +24,7 @@ public class User {
         this(null, null, null);
     }
 
-    public User(String username, String password, Role role){
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -63,7 +63,7 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User u = (User) o;
-        return u.id == this.id && u.username == this.username && u.role == this.role;
+        return u.id == this.id && u.username.equals(this.username) && u.role == this.role;
     }
 
     @Override

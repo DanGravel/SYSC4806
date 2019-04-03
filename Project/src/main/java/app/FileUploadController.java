@@ -29,6 +29,7 @@ public class FileUploadController extends app.Controller {
         model.addAttribute("articles", articleRepository.findByUsers(getUser()));
         return "upload";
     }
+
     /***
      * Uploads a file from form data
      * @param file The Multipart file that got uploaded
@@ -38,7 +39,7 @@ public class FileUploadController extends app.Controller {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         if (file == null || StringUtils.isNullOrEmpty(file.getOriginalFilename())
-                                || StringUtils.isNullOrEmpty(file.getContentType()) || file.getBytes().length <= 0) {
+                || StringUtils.isNullOrEmpty(file.getContentType()) || file.getBytes().length <= 0) {
             //This is how spring handles bad requests, throws exceptions.
             throw new BadFileException();
         }
@@ -58,7 +59,7 @@ public class FileUploadController extends app.Controller {
      * @return
      */
     @GetMapping("/getfile/{id}")
-    public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
+    public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id") Long id) {
         Article article = articleRepository.findById(id).get();
         User currentUser = super.getUser();
         // allow editors to download all files
@@ -77,6 +78,7 @@ public class FileUploadController extends app.Controller {
 
     /**
      * Deletes an article from the article repository
+     *
      * @param id The id of the article to be deleted
      * @return
      */

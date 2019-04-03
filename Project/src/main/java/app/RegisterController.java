@@ -32,6 +32,7 @@ public class RegisterController extends app.Controller {
 
     /**
      * Handles get request for register page
+     *
      * @param model used to add user attribute
      * @return
      */
@@ -43,24 +44,26 @@ public class RegisterController extends app.Controller {
 
     /**
      * Checks if user already exists
+     *
      * @param username checks if username is already in use
      * @return json response with userExists as the only key
      */
     @RequestMapping("/register/user")
     @ResponseBody
-    public Map<String, Boolean> userExists(@RequestParam(value = "username")String username) {
+    public Map<String, Boolean> userExists(@RequestParam(value = "username") String username) {
         User user = userRepository.findByUsername(username);
         return Collections.singletonMap("userExists", user != null);
     }
 
     /**
      * Creates new user
-     * @param user user that should be created
+     *
+     * @param user    user that should be created
      * @param request request being sent
      * @return redirects to user homepage
      */
     @PostMapping("/register")
-    public String newUser(@ModelAttribute User user,  HttpServletRequest request) throws ServletException {
+    public String newUser(@ModelAttribute User user, HttpServletRequest request) throws ServletException {
 
         String unencryptedPass = user.getPassword();
         user.setPassword(encoder.encode(user.getPassword()));

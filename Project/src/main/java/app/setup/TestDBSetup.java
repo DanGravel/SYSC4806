@@ -5,10 +5,11 @@ import app.UserRepository;
 import app.models.Article;
 import app.models.Role;
 import app.models.User;
-import java.util.Date;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import java.util.Date;
 
 public class TestDBSetup {
 
@@ -45,7 +46,7 @@ public class TestDBSetup {
         createUser(userRepository, "test4", Role.REVIEWER, inMemoryUserDetailsManager);
         createUser(userRepository, "test5", Role.REVIEWER, inMemoryUserDetailsManager);
         createArticle(articleRepository, userRepository.findByUsername("test1"), userRepository.findByUsername("test3"), 100);
-        for(int i = 0; i < 20; ++i) {
+        for (int i = 0; i < 20; ++i) {
             if (i < 10) {
                 createArticle(articleRepository, userRepository.findByUsername("test1"), userRepository.findByUsername("test3"), i);
             } else {

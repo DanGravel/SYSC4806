@@ -1,28 +1,24 @@
 package app;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import app.Utils.StringUtils;
+import app.exceptions.BadFileException;
+import app.models.Article;
+import app.models.Role;
+import app.models.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import app.models.Article;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import app.models.Role;
-import app.models.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import org.springframework.web.multipart.MultipartFile;
-import app.Utils.StringUtils;
-import app.exceptions.BadFileException;
+import java.util.Date;
 
 @Controller
 public class ReviewerController extends app.Controller {
@@ -45,19 +41,20 @@ public class ReviewerController extends app.Controller {
      * @throws IOException
      */
     @PostMapping("/review/{id}")
-    public String uploadFile(@PathVariable(value="id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadFile(@PathVariable(value = "id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
         if (file == null || StringUtils.isNullOrEmpty(file.getOriginalFilename())
                 || StringUtils.isNullOrEmpty(file.getContentType()) || file.getBytes().length <= 0) {
             //This is how spring handles bad requests, throws exceptions.
             throw new BadFileException();
         }
-        articleRepository.findById(id).ifPresent((Article article)  -> {
-            try{
+        articleRepository.findById(id).ifPresent((Article article) -> {
+            try {
                 article.setReview(file.getBytes());
                 article.setReviewFileType(file.getContentType());
                 article.setReviewSubmissionDate(new Date());
                 article.setReviewFileName(file.getOriginalFilename());
-            } catch(IOException e) {}
+            } catch (IOException e) {
+            }
             articleRepository.save(article);
         });
         return "redirect:/reviewer";
@@ -69,7 +66,7 @@ public class ReviewerController extends app.Controller {
      * @return
      */
     @GetMapping("/review/{id}")
-    public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id")Long id){
+    public ResponseEntity<byte[]> getFileById(@PathVariable(value = "id") Long id) {
         Article article = articleRepository.findById(id).get();
         User currentUser = super.getUser();
         // allow editors to download all files

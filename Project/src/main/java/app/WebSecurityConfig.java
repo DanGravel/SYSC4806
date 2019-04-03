@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/upload/**").access("hasRole('SUBMITTER')")
                 .antMatchers("/editor/**").access("hasRole('EDITOR')")
                 .antMatchers("/reviewer/**").access("hasRole('REVIEWER')")
-                .antMatchers( "/register/**", "/css/**", "/js/**", "/webjars/**").permitAll()
+                .antMatchers("/register/**", "/css/**", "/js/**", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

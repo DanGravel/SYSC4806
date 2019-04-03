@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
@@ -19,6 +18,7 @@ import java.util.List;
 public class EditorController extends app.Controller {
     private static final int NO_USER = 0;
     private static final int REMOVE_USER = -1;
+
     /***
      * Adds all the reviewers to the model for the dropdown menu in editor.html
      * @return List<User> of all users with the Role.REVIEWER role
@@ -52,14 +52,13 @@ public class EditorController extends app.Controller {
     @GetMapping("/updateReviewer")
     public String updateReviewer(@RequestParam("articleId") long articleId, @RequestParam("reviewer") long userId) {
         Article article = articleRepository.findById(articleId).get();
-        if(userId == REMOVE_USER) {
+        if (userId == REMOVE_USER) {
             article.removeReviewer();
 
-        } else if(userId != NO_USER){
+        } else if (userId != NO_USER) {
             User callingUser = getUser();
             User reviewingUser = userRepository.findById(userId);
-            if(article.getState().equals(ArticleState.IN_REVIEW.toString()))
-            {
+            if (article.getState().equals(ArticleState.IN_REVIEW.toString())) {
                 article.removeReviewer();
                 article.setReview(null);
             }
@@ -80,7 +79,7 @@ public class EditorController extends app.Controller {
     public String updateDueDate(@RequestParam("articleId") long articleId, @RequestParam("date") String date) {
         Article article = articleRepository.findById(articleId).get();
         try {
-            Date date1= new SimpleDateFormat("EEEE, MMMM d, yyyy hh:mm a").parse(date);
+            Date date1 = new SimpleDateFormat("EEEE, MMMM d, yyyy hh:mm a").parse(date);
             article.setReviewDueDate(date1);
             articleRepository.save(article);
             return "redirect:/editor";

@@ -1,10 +1,9 @@
 function checkUsername() {
-    $.get("/register/user",  { username: $("#username").val()}, function (data) {
-        if(data.userExists) {
-            $("#username").val("")
+    $.get("/register/user", {username: $("#username").val()}, function (data) {
+        if (data.userExists) {
+            $("#username").val("");
             $("#username").addClass("is-invalid")
-        }
-        else{
+        } else {
             $("#username").removeClass("is-invalid")
         }
     })
