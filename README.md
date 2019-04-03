@@ -13,6 +13,7 @@ The current features that have been implemented into the system are:
 - Editor can delete files if they want
 - Allow editors to assign articles to a reviewer
 - Editor can assign a date for the reviewer to submit a review by
+- The reviewer can download the article to view it
 - Reviewers can download the article to look over it and upload a review for the article
 - The editor can accept or reject a review
 
@@ -20,7 +21,7 @@ The project also has CI integration with Travis CI. There are unit tests written
 
 **Next Iteration**
 
-The next iteration will focus on testing the UI for bugs and making patches, adding the ability for editors to download the review and completing a full test suite.
+This was the last iteration. 
 
 **DB Schema**
 
@@ -64,11 +65,7 @@ Description: Many-To-Many table between Users and Articles. Multiple users will 
 
 Relationship Diagram (IntelliJ Generated):
 
-![](Project/UML%20Images/DBDiagram.png)
-
-Relationship Diagram (Hand Drawn): 
-
-![](Project/UML%20Images/DBDiagram%20(1).png)
+![](Project/UML%20Images/DBDiagram.PNG)
 
 **UML Class Diagram**
 ![](Project/UML%20Images/ClassDiagram%20(1).png)
