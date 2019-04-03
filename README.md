@@ -46,9 +46,9 @@ Description: Holds Article information. Keeps track of the state of the review.
 | id                   | long    | Primary  |
 | filename             | string  |          |
 | filetype             | string  |          |
-| review               | string  |          |
 | reviewDueDate        | date    |          |
 | reviewFileType       | string  |          |
+| reviewFileName       | string  |          |
 | reviewSubmissionDate | date    |          |
 | state                | string  |          |   
 | date                 | Date    |          |   
