@@ -1,12 +1,11 @@
 const fileSizeLimit = 10000000; //10 MB in bytes
 let previousFile = null;
-
 function checkFileSize(event) {
     var fileElement = document.getElementById("fileLoad");
     var fileArr = fileElement.files;
 
     if (!fileArr || !fileArr[0]) {
-        alertUpload("ERROR: No File Selected");
+        alertUpload("ERROR: No File Selected")
         event.preventDefault();
         return;
     }
@@ -18,13 +17,13 @@ function checkFileSize(event) {
         event.preventDefault();
         document.getElementById("fileUploadForm").reset();
         $(".custom-file-label").removeClass("selected").html("Select File for Upload");
-
+        return;
     } else if (file.size <= 0) {
         alertUpload("ERROR: File Contains no Data");
         event.preventDefault();
         document.getElementById("fileUploadForm").reset();
         $(".custom-file-label").removeClass("selected").html("Select File for Upload");
-
+        return;
     }
 
 }
@@ -52,9 +51,9 @@ function deleteFile(id) {
     }
 }
 
-$(function () {
+$(function() {
 
-    $(".custom-file-input").on("change", function () {
+    $(".custom-file-input").on("change", function() {
         if (!this.files || !this.files[0]) {
             document.getElementById('fileLoad').files = previousFile;
             return;

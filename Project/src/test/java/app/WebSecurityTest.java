@@ -28,18 +28,16 @@ public class WebSecurityTest {
 
     /**
      * Tests the redirect from going to a protected path while logged out
-     *
      * @throws Exception
      */
     @Test
     public void loginProtection() throws Exception {
         this.mockMvc.perform(get("/upload").accept(MediaType.APPLICATION_JSON))
-                .andExpect(redirectedUrl("http://localhost/login"));
+        .andExpect(redirectedUrl("http://localhost/login"));
     }
 
     /**
      * Tests open endpoints that dont require authentication
-     *
      * @throws Exception
      */
     @Test
@@ -52,7 +50,6 @@ public class WebSecurityTest {
 
     /**
      * Tests path protection for article submitter
-     *
      * @throws Exception
      */
     @Test
@@ -64,7 +61,6 @@ public class WebSecurityTest {
 
     /**
      * Tests path protection for article reviewer
-     *
      * @throws Exception
      */
     @Test
@@ -76,7 +72,6 @@ public class WebSecurityTest {
 
     /**
      * Tests path protection for editor
-     *
      * @throws Exception
      */
     @Test

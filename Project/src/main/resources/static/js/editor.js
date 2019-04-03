@@ -1,14 +1,14 @@
-$(document).ready(function () {
-    $("#editor_table").DataTable({
-        "columnDefs": [{
-            "targets": "no-sort",
-            "orderable": false,
-        }]
+$(document).ready( function () {
+    $("#editor_table").DataTable( {
+            "columnDefs": [ {
+              "targets"  : "no-sort",
+              "orderable": false,
+            }]
     });
     $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
-        useCurrent: false,
-        sideBySide: true,
-        keepOpen: true,
+        useCurrent : false,
+        sideBySide : true,
+        keepOpen : true,
         buttons: {
             showClear: true,
             showClose: true,
@@ -24,12 +24,11 @@ $(document).ready(function () {
             next: 'fas fa-chevron-right',
             clear: 'fas fa-trash',
             close: 'fas fa-check'
-        }
-    });
-});
+    }});
+} );
 
-$(function () {
-    $("[id*='datetimepicker']").on('hide.datetimepicker', function (e) {
-        this.closest("form").submit();
+$(function(){
+    $("[id*='datetimepicker']").on('hide.datetimepicker', function(e) {
+       this.closest("form").submit();
     });
 });

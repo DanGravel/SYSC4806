@@ -1,9 +1,9 @@
-$(document).ready(function () {
+$(document).ready( function () {
     $("#reviewer_table").DataTable({
         "columnDefs": [{
             "targets": "no-sort",
             "orderable": false,
         }],
-        "order": [[2, "desc"]]
+        "order": [[ 2, "desc" ]]
     });
 });

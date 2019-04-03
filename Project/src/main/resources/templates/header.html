@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:fragment="headerfiles">
-    <link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-<nav class="navbar navbar-fixed-top navbar-dark bg-dark" th:fragment="header">
-    <a class="navbar-brand" href="/">Home</a>
-    <form class="form-inline my-2 my-lg-0" method="POST" th:action="@{/logout}">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Out</button>
-    </form>
-</nav>
+    <nav class="navbar navbar-fixed-top navbar-dark bg-dark" th:fragment="header">
+        <a class="navbar-brand" href="/">Home</a>
+        <form class="form-inline my-2 my-lg-0" method="POST" th:action="@{/logout}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Out</button>
+        </form>
+    </nav>
 </body>
 </html>

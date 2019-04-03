@@ -1,44 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns ="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
     <script src="webjars/jquery/jquery.min.js"></script>
     <script src="/js/register.js"></script>
-    <link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/register.css}"/>
+    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
 </head>
 <body>
-<div class="wrapper">
-    <div id="registerContainer">
-        <h1>New Account</h1>
-        <form action="#" id="newUserForm" method="post" th:action="@{/register}" th:object="${user}">
-            <div class="form-group">
-                <label>User Name</label><br>
-                <input class="form-control" id="username" onchange="checkUsername()" required th:field="*{username}"
-                       type="text"/>
-                <div class="invalid-feedback">
-                    Username is already taken.
+    <div class="wrapper">
+        <div id="registerContainer">
+            <h1>New Account</h1>
+            <form id="newUserForm" action="#" th:action="@{/register}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label>User Name</label><br>
+                    <input id="username" class="form-control" type="text" th:field="*{username}" onchange="checkUsername()" required/>
+                    <div class="invalid-feedback">
+                        Username is already taken.
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Password</label><br>
-                <input class="form-control" id="password" required th:field="*{password}" type="password"/>
-            </div>
+                <div class="form-group">
+                    <label>Password</label><br>
+                    <input id="password" class="form-control" type="password" th:field="*{password}" required/>
+                </div>
 
-            <div class="form-group">
-                <label>Account Type</label><br>
-                <select class="form-control" required th:field="*{role}">
-                    <option th:value="${T(app.models.Role).SUBMITTER}">Article Submitter</option>
-                    <option th:value="${T(app.models.Role).EDITOR}">Editor</option>
-                    <option th:value="${T(app.models.Role).REVIEWER}">Reviewer</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label>Account Type</label><br>
+                    <select class="form-control" th:field="*{role}" required>
+                        <option th:value="${T(app.models.Role).SUBMITTER}">Article Submitter</option>
+                        <option th:value="${T(app.models.Role).EDITOR}">Editor</option>
+                        <option th:value="${T(app.models.Role).REVIEWER}">Reviewer</option>
+                    </select>
+                </div>
 
-            <button class="btn btn-primary" type="submit">Submit</button>
-            <button class="btn btn-secondary" type="reset">Reset</button>
-        </form>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-secondary" type="reset">Reset</button>
+            </form>
+        </div>
     </div>
-</div>
 </body>
 </html>

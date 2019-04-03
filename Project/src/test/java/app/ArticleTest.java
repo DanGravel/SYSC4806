@@ -1,6 +1,8 @@
 package app;
 
+import app.Utils.StringUtils;
 import app.models.Article;
+import app.models.ArticleState;
 import app.models.Role;
 import app.models.User;
 import org.junit.Before;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.context.ConfigFileApplicationContextInitial
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,8 +60,8 @@ public class ArticleTest {
     public void testAddReviewer_ReviewerRole() {
         testArticle.addReviewer(Role.EDITOR, testReviewer);
 
-        assert (testArticle.getUsers().contains(testReviewer));
-        assert (testArticle.getState().equals(IN_REVIEW));
+        assert(testArticle.getUsers().contains(testReviewer));
+        assert(testArticle.getState().equals(IN_REVIEW));
     }
 
     @Test(expected = IllegalStateException.class)
