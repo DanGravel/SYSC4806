@@ -15,10 +15,12 @@
     <link rel="stylesheet" href="webjars/datatables/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="webjars/font-awesome/css/all.css">
     <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/editor.css">
 </head>
 <body>
     <header th:insert="header.html :: header"></header>
     <br>
+    <div class="container-fluid">
     <table class="table table-bordered" id="editor_table">
         <thead class="thead-dark">
             <th>File Name</th>
@@ -69,5 +71,6 @@
             </tr>
         </tbody>
     </table>
+    </div>
 </body>
 </html>
