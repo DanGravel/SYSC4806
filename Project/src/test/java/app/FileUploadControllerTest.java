@@ -95,7 +95,7 @@ public class FileUploadControllerTest {
     @Test
     @WithMockUser(username = "test1", password = "password", roles = {"SUBMITTER"})
     public void testDeleteFile() throws Exception {
-        mock.perform(delete("/upload/1")
+        mock.perform(delete("/upload/2")
                         .with(csrf()))
                 .andExpect(status().isOk());
     }
