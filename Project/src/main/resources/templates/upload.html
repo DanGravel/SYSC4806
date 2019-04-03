@@ -50,18 +50,17 @@
                     <th>Reviewer</th>
                     <th>Review Due Date</th>
                     <th>State</th>
-                    <th>Download</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:id="'article' + ${article.id}" scope="row" th:each="article: ${articles}">
-                    <td th:text="${article.fileName}"></td>
+                    <td ><a th:href="@{/getfile/{id}(id=${article.id})}" th:text="${article.fileName}"></a></td>
                     <td th:text="${article.date}"></td>
                     <td th:text="${article.getReviewer() != null ? article.getReviewer().username : ''}"></td>
                     <td th:text="${article.getFormattedDueDate()}"></td>
                     <td th:text="${article.state}"></td>
                     <td>
-                        <a th:href="@{/getfile/{id}(id=${article.id})}">Download</a> &nbsp;
                         <button type="button" class="btn btn-danger" th:onclick="'deleteFile(\'' + ${article.id} + '\');'">
                             <i class="fas fa-trash"></i>
                         </button>
