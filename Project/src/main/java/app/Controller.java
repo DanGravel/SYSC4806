@@ -14,8 +14,7 @@ public class Controller {
 
     public User getUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
-
+        String username = ((UserDetails) principal).getUsername();
         return userRepository.findByUsername(username);
     }
 }

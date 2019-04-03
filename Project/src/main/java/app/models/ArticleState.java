@@ -1,6 +1,8 @@
 package app.models;
 
 public enum ArticleState {
+    // enum by default implements a toString() method
+    // ArticleState.SUBMITTED.toString() -> "SUBMITTED"
     SUBMITTED("Submitted"),
     IN_REVIEW("In Review"),
     ACCEPTED("Accepted"),

@@ -5,8 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Entity
-public class Article
-{
+public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -60,23 +59,31 @@ public class Article
 
     public User getReviewer() {
         return users.stream()
-            .filter(u -> u.getRole().equals(Role.REVIEWER))
-            .findFirst()
-            .orElse(null);
+                .filter(u -> u.getRole().equals(Role.REVIEWER))
+                .findFirst()
+                .orElse(null);
     }
 
     public void removeReviewer() {
         removeUser(this.getReviewer());
-        state = ArticleState.SUBMITTED;
+        this.state = ArticleState.SUBMITTED;
     }
 
-    public String getReviewFileType() { return reviewFileType; }
+    public String getReviewFileType() {
+        return reviewFileType;
+    }
 
-    public void setReviewFileType(String reviewFileType) { this.reviewFileType = reviewFileType; }
+    public void setReviewFileType(String reviewFileType) {
+        this.reviewFileType = reviewFileType;
+    }
 
-    public String getReviewFileName() { return reviewFileName; }
+    public String getReviewFileName() {
+        return reviewFileName;
+    }
 
-    public void setReviewFileName(String reviewFileName) { this.reviewFileName = reviewFileName; }
+    public void setReviewFileName(String reviewFileName) {
+        this.reviewFileName = reviewFileName;
+    }
 
     public String getFileName() {
         return fileName;
@@ -120,25 +127,27 @@ public class Article
     public Date getReviewDueDate() {
         return this.reviewDueDate;
     }
-    public void setReviewSubmissionDate(Date date) {
-        this.reviewSubmissionDate = date;
+
+    public void setReviewDueDate(Date date) {
+        this.reviewDueDate = date;
     }
 
     public Date getReviewSubmissionDate() {
         return this.reviewDueDate;
     }
 
-    public String getFormattedDueDate() {
-        if(this.reviewDueDate == null) return null;
-        return new SimpleDateFormat("EEEE, MMMM d, yyyy h:mm a").format(this.reviewDueDate);
-    }
-    public String getFormattedReviewSubmissionDate() {
-        if(this.reviewSubmissionDate == null) return null;
-        return new SimpleDateFormat("EEEE, MMMM d, yyyy h:mm a").format(this.reviewSubmissionDate);
+    public void setReviewSubmissionDate(Date date) {
+        this.reviewSubmissionDate = date;
     }
 
-    public void setReviewDueDate(Date date) {
-        this.reviewDueDate = date;
+    public String getFormattedDueDate() {
+        if (this.reviewDueDate == null) return null;
+        return new SimpleDateFormat("EEEE, MMMM d, yyyy h:mm a").format(this.reviewDueDate);
+    }
+
+    public String getFormattedReviewSubmissionDate() {
+        if (this.reviewSubmissionDate == null) return null;
+        return new SimpleDateFormat("EEEE, MMMM d, yyyy h:mm a").format(this.reviewSubmissionDate);
     }
 
     public String getState() {
@@ -153,7 +162,9 @@ public class Article
         this.review = review;
     }
 
-    public boolean hasReview() { return this.review != null;}
+    public boolean hasReview() {
+        return this.review != null;
+    }
 
     public void addReviewer(Role caller, User user) {
         if (user == null) {
@@ -167,8 +178,7 @@ public class Article
         if (caller == Role.EDITOR) {
             this.state = ArticleState.IN_REVIEW;
             addAuthorizedUser(user);
-        }
-        else {
+        } else {
             throw new IllegalStateException("Non-editor called addReviewer");
         }
     }
@@ -180,8 +190,7 @@ public class Article
 
         if (review != null) {
             state = (accepted) ? ArticleState.ACCEPTED : ArticleState.REJECTED;
-        }
-        else {  // review == null
+        } else {  // review == null
             throw new IllegalStateException("setAccepted was called on an article with no review");
         }
     }
@@ -196,11 +205,12 @@ public class Article
 
     /**
      * Checks to see if a review has been submitted on time
+     *
      * @return boolean true if review has been submitted on time
      */
     public boolean isOnTime() {
-        if(reviewDueDate != null) {
-            if(reviewSubmissionDate != null) {
+        if (reviewDueDate != null) {
+            if (reviewSubmissionDate != null) {
                 return reviewDueDate.after(reviewSubmissionDate); //Checks review date against submission date
             }
             return reviewDueDate.after(new Date()); //Checks review date against current date
