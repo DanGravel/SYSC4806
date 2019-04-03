@@ -5,70 +5,69 @@
     <title>Upload File</title>
     <script src="webjars/jquery/jquery.min.js"></script>
     <script src="/js/upload.js"></script>
-    <link rel="stylesheet" href="/css/upload.css"/>
-    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/webjars/font-awesome/css/all.min.css" />
+    <link href="/css/upload.css" rel="stylesheet"/>
+    <link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/webjars/font-awesome/css/all.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <header th:insert="header.html :: header"></header>
-    <div id="errorAlert" class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <span id="errorMsg"></span>
-    </div>
-    <div id="successAlert" class="alert alert-success alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        File Deleted Succesfully
-    </div>
+<header th:insert="header.html :: header"></header>
+<div class="alert alert-danger alert-dismissable" id="errorAlert">
+    <button aria-hidden="true" class="close" data-dismiss="alert" type="button">&times;</button>
+    <span id="errorMsg"></span>
+</div>
+<div class="alert alert-success alert-dismissable" id="successAlert">
+    <button aria-hidden="true" class="close" data-dismiss="alert" type="button">&times;</button>
+    File Deleted Succesfully
+</div>
 
 
-
-    <div class="container">
-        <div class="d-flex justify-content-center align-items-center" >
-        <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/upload}">
-             <ul>
-                 <li>
+<div class="container">
+    <div class="d-flex justify-content-center align-items-center">
+        <form enctype="multipart/form-data" id="fileUploadForm" method="POST" th:action="@{/upload}">
+            <ul>
+                <li>
                     <div class="input-group">
                         <div class="custom-file">
                             <label class="custom-file-label" for="fileLoad">Select File for Upload</label>
-                            <input type="file" name="file"  class="custom-file-input" id="fileLoad">
+                            <input class="custom-file-input" id="fileLoad" name="file" type="file">
                         </div>
                     </div>
-                 </li>
-                 <li>
-                     <input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)">
-                 </li>
-             </ul>
+                </li>
+                <li>
+                    <input class="btn btn-primary" onclick="checkFileSize(event)" type="submit" value="Upload File">
+                </li>
+            </ul>
         </form>
-        </div>
-        <br/>
-
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>File Name</th>
-                    <th>Upload Date</th>
-                    <th>Reviewer</th>
-                    <th>Review Due Date</th>
-                    <th>State</th>
-                    <th>Download</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:id="'article' + ${article.id}" scope="row" th:each="article: ${articles}">
-                    <td th:text="${article.fileName}"></td>
-                    <td th:text="${article.date}"></td>
-                    <td th:text="${article.getReviewer() != null ? article.getReviewer().username : ''}"></td>
-                    <td th:text="${article.getFormattedDueDate()}"></td>
-                    <td th:text="${article.state}"></td>
-                    <td>
-                        <a th:href="@{/getfile/{id}(id=${article.id})}">Download</a> &nbsp;
-                        <button type="button" class="btn btn-danger" th:onclick="'deleteFile(\'' + ${article.id} + '\');'">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
+    <br/>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>File Name</th>
+            <th>Upload Date</th>
+            <th>Reviewer</th>
+            <th>Review Due Date</th>
+            <th>State</th>
+            <th>Download</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr scope="row" th:each="article: ${articles}" th:id="'article' + ${article.id}">
+            <td th:text="${article.fileName}"></td>
+            <td th:text="${article.date}"></td>
+            <td th:text="${article.getReviewer() != null ? article.getReviewer().username : ''}"></td>
+            <td th:text="${article.getFormattedDueDate()}"></td>
+            <td th:text="${article.state}"></td>
+            <td>
+                <a th:href="@{/getfile/{id}(id=${article.id})}">Download</a> &nbsp;
+                <button class="btn btn-danger" th:onclick="'deleteFile(\'' + ${article.id} + '\');'" type="button">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

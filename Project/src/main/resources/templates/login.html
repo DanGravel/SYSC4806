@@ -3,29 +3,29 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
 </head>
 <body>
-    <div class="wrapper">
-        <div id="loginContainer">
-            <div class="alert alert-danger" role="alert" th:if="${param.error}">
-                Invalid username and password.
-            </div>
-
-            <form th:action="@{/login}" method="post">
-                <div class="form-group">
-                    <label> User Name</label>
-                    <input type="text" class="form-control" name="username" required/>
-                </div>
-                <div class="form-group">
-                    <label> Password</label>
-                    <input type="password" class="form-control" name="password" required/>
-                </div>
-                <button class="btn btn-primary" type="submit">Login</button>
-                <button class="btn btn-secondary" onclick="location.href='/register'" type="button">Register</button>
-            </form>
+<div class="wrapper">
+    <div id="loginContainer">
+        <div class="alert alert-danger" role="alert" th:if="${param.error}">
+            Invalid username and password.
         </div>
+
+        <form method="post" th:action="@{/login}">
+            <div class="form-group">
+                <label> User Name</label>
+                <input class="form-control" name="username" required type="text"/>
+            </div>
+            <div class="form-group">
+                <label> Password</label>
+                <input class="form-control" name="password" required type="password"/>
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+            <button class="btn btn-secondary" onclick="location.href='/register'" type="button">Register</button>
+        </form>
     </div>
-    </body>
+</div>
+</body>
 </html>

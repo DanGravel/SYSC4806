@@ -10,7 +10,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class TestApplication {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 

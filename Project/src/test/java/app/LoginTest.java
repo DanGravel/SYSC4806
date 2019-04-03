@@ -11,8 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -25,10 +25,11 @@ public class LoginTest {
 
     /**
      * Tests login
+     *
      * @throws Exception
      */
     @Test
-    @WithMockUser(username="user", password = "password", roles={"SUBMITTER"})
+    @WithMockUser(username = "user", password = "password", roles = {"SUBMITTER"})
     public void login() throws Exception {
 
         mockMvc.perform(formLogin().user("user").password("password"))
@@ -37,6 +38,7 @@ public class LoginTest {
 
     /**
      * Tests login page get request
+     *
      * @throws Exception
      */
     @Test
@@ -46,6 +48,7 @@ public class LoginTest {
 
     /**
      * Tests login with user that is not registered
+     *
      * @throws Exception
      */
     @Test

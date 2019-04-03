@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Reviewer</title>
-    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="webjars/datatables/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/css/upload.css"/>
-    <link rel="stylesheet" href="/css/reviewer.css"/>
-    <link rel="stylesheet" href="webjars/font-awesome/css/all.css">
+    <link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="webjars/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/css/upload.css" rel="stylesheet"/>
+    <link href="/css/reviewer.css" rel="stylesheet"/>
+    <link href="webjars/font-awesome/css/all.css" rel="stylesheet">
     <script src="webjars/jquery/jquery.min.js"></script>
     <script src="webjars/datatables/js/jquery.dataTables.min.js"></script>
     <script src="webjars/datatables/js/dataTables.bootstrap4.min.js"></script>
@@ -17,73 +17,79 @@
     <script src="/js/reviewer.js"></script>
 </head>
 <body>
-    <header th:insert="header.html :: header"></header>
-    <div class="container">
-        <table class="table table-bordered" id="reviewer_table">
-            <thead>
-            <th>Filename</th>
-            <th>Status</th>
-            <th>Due Date</th>
-            <th>Review Submission Date</th>
-            <th class="no-sort">Review</th>
-            </thead>
-            <tbody>
-            <tr th:each="article: ${articles}">
-                <td>
-                    <a th:href="@{/getfile/{id}(id=${article.id})}" th:text="${article.fileName}"></a>
-                </td>
-                <td th:text="${article.state}"></td>
-                <td th:text="${article.getFormattedDueDate()}"></td>
-                <td th:text="${article.getFormattedReviewSubmissionDate()}"></td>
-                <td class="btn-div">
-                    <th:block th:switch="${article.review}">
-                        <th:block th:case="NULL">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}">Submit</button>
-                        </th:block>
-                        <th:block th:case="*">
-                            <a class="btn btn-primary" th:href="@{/review/{id}(id=${article.id})}"><i class="fas fa-download"></i></a>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#reviewModal" th:data-id="${article.id}"><i class="fas fa-edit"></i></button>
-                        </th:block>
+<header th:insert="header.html :: header"></header>
+<div class="container">
+    <table class="table table-bordered" id="reviewer_table">
+        <thead>
+        <th>Filename</th>
+        <th>Status</th>
+        <th>Due Date</th>
+        <th>Review Submission Date</th>
+        <th class="no-sort">Review</th>
+        </thead>
+        <tbody>
+        <tr th:each="article: ${articles}">
+            <td>
+                <a th:href="@{/getfile/{id}(id=${article.id})}" th:text="${article.fileName}"></a>
+            </td>
+            <td th:text="${article.state}"></td>
+            <td th:text="${article.getFormattedDueDate()}"></td>
+            <td th:text="${article.getFormattedReviewSubmissionDate()}"></td>
+            <td class="btn-div">
+                <th:block th:switch="${article.review}">
+                    <th:block th:case="NULL">
+                        <button class="btn btn-primary" data-target="#reviewModal" data-toggle="modal"
+                                th:data-id="${article.id}">Submit
+                        </button>
                     </th:block>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                    <th:block th:case="*">
+                        <a class="btn btn-primary" th:href="@{/review/{id}(id=${article.id})}"><i
+                                class="fas fa-download"></i></a>
+                        <button class="btn btn-primary" data-target="#reviewModal" data-toggle="modal"
+                                th:data-id="${article.id}"><i class="fas fa-edit"></i></button>
+                    </th:block>
+                </th:block>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Submit Review</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal fade" id="reviewModal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Submit Review</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger alert-dismissable" id="errorAlert">
+                    <button aria-hidden="true" class="close" data-dismiss="alert" type="button">&times;</button>
+                    <span id="errorMsg"></span>
                 </div>
-                <div class="modal-body">
-                    <div id="errorAlert" class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <span id="errorMsg"></span>
-                    </div>
-                    <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/review/}">
-                        <ul>
-                            <li>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <label class="custom-file-label" for="fileLoad">Select File for Upload</label>
-                                        <input type="file" name="file"  class="custom-file-input" id="fileLoad">
-                                    </div>
+                <form enctype="multipart/form-data" id="fileUploadForm" method="POST" th:action="@{/review/}">
+                    <ul>
+                        <li>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <label class="custom-file-label" for="fileLoad">Select File for Upload</label>
+                                    <input class="custom-file-input" id="fileLoad" name="file" type="file">
                                 </div>
-                            </li>
-                            <li>
-                                <input type="submit" value="Upload File" class="btn btn-primary" onclick="checkFileSize(event)">
-                            </li>
-                        </ul>
-                    </form>
-                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <input class="btn btn-primary" onclick="checkFileSize(event)" type="submit"
+                                   value="Upload File">
+                        </li>
+                    </ul>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

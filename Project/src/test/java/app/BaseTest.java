@@ -9,8 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,14 +28,14 @@ public class BaseTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username="userSubmitter", roles={"SUBMITTER"})
+    @WithMockUser(username = "userSubmitter", roles = {"SUBMITTER"})
     public void submitterTest() throws Exception {
         userRepository.save(new User("userSubmitter", "password", Role.SUBMITTER));
         mockMvc.perform(get("/")).andExpect(redirectedUrl("/upload"));
     }
 
     @Test
-    @WithMockUser(username="userEditor", roles={"REVIEWER"})
+    @WithMockUser(username = "userEditor", roles = {"REVIEWER"})
     public void reviewerTest() throws Exception {
         userRepository.save(new User("userEditor", "password", Role.EDITOR));
 
@@ -45,7 +43,7 @@ public class BaseTest {
     }
 
     @Test
-    @WithMockUser(username="userReviewer", roles={"EDITOR"})
+    @WithMockUser(username = "userReviewer", roles = {"EDITOR"})
     public void editorTest() throws Exception {
         userRepository.save(new User("userReviewer", "password", Role.REVIEWER));
         mockMvc.perform(get("/")).andExpect(redirectedUrl("/reviewer"));
